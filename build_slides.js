@@ -1,5 +1,6 @@
-// 進路も分散してみませんか — 明治大学附属世田谷高校 高1 / 50分版（35枚）
-// v6（明聖・高3・20分）ベース。世田谷向けに調整し、内容を35枚へ拡張。
+// 進路も分散してみませんか — 明治大学附属世田谷高校 高1 / 50分版（48枚・2本柱版）
+// v6（明聖・高3・20分）ベース。世田谷向け調整＋「場づくり」の柱を追加。
+// 柱① 分散 / 柱② 場をつくる の2本柱。締め: 分散→場づくり→失敗はない→人生目標。
 // 生成: node build_slides.js  ->  build/career_talk_setagaya.pptx
 const PptxGenJS = require("pptxgenjs");
 
@@ -17,11 +18,12 @@ const C = {
   green:  "2A9D8F", green2: "52B788", purple: "9B7BFF", blue:   "5C9DE0",
 };
 const FONT = "IPAGothic";
-let TOTAL = 35;
+const TOTAL = 48;
+let N = 0;
 
 function bg(s) { s.background = { color: C.bg }; }
-function footer(s, n) {
-  s.addText(`${n}/${TOTAL}`, { x: 11.9, y: 6.95, w: 1.3, h: 0.4, align: "right",
+function footer(s) {
+  s.addText(`${N}/${TOTAL}`, { x: 11.9, y: 6.95, w: 1.3, h: 0.4, align: "right",
     fontSize: 12, color: C.muted, fontFace: FONT });
 }
 function hint(s, t) {
@@ -32,9 +34,8 @@ function title(s, t, color = C.white) {
   s.addText(t, { x: 0.4, y: 0.35, w: 12.5, h: 0.95, align: "center",
     fontSize: 34, bold: true, color, fontFace: FONT });
 }
-function newSlide() { const s = pptx.addSlide(); bg(s); return s; }
+function newSlide() { const s = pptx.addSlide(); bg(s); N++; return s; }
 
-// 縦並びの帯リスト（左アクセントバー付き）
 function barList(s, rows, opt = {}) {
   const x = opt.x ?? 1.0, w = opt.w ?? 11.33, h = opt.h ?? 1.0, gap = opt.gap ?? 0.22;
   let y = opt.y ?? 1.7;
@@ -55,13 +56,24 @@ function barList(s, rows, opt = {}) {
   });
 }
 
-let N = 0; // スライド番号カウンタ
+// 章扉
+function chapter(kicker, num, big, sub, accent) {
+  const s = newSlide();
+  s.addShape("rect", { x: 0, y: 0, w: 0.35, h: 7.5, fill: { color: accent } });
+  s.addText(kicker, { x: 1.2, y: 2.2, w: 11, h: 0.6, fontSize: 20, color: C.muted, fontFace: FONT });
+  s.addText([
+    { text: num + "  ", options: { fontSize: 60, bold: true, color: accent } },
+    { text: big, options: { fontSize: 60, bold: true, color: C.white } },
+  ], { x: 1.2, y: 2.85, w: 11, h: 1.5, fontFace: FONT });
+  s.addText(sub, { x: 1.25, y: 4.5, w: 11, h: 0.7, fontSize: 24, color: accent, fontFace: FONT });
+  footer(s);
+}
 
 // =====================================================================
 // 1. 表紙
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addShape("rect", { x: 0, y: 3.45, w: 13.333, h: 0.05, fill: { color: C.teal } });
   s.addText("進路も分散してみませんか", { x: 0.5, y: 2.1, w: 12.3, h: 1.2, align: "center",
     fontSize: 50, bold: true, color: C.white, fontFace: FONT });
@@ -71,60 +83,60 @@ let N = 0; // スライド番号カウンタ
     fontSize: 24, bold: true, color: C.white, fontFace: FONT });
   s.addText("明治大学附属世田谷高校 / 2026.7.9", { x: 0.5, y: 5.3, w: 12.3, h: 0.5,
     align: "center", fontSize: 16, color: C.muted, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
 // 2. 今日のゴール
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "今日のゴール");
   s.addShape("roundRect", { x: 1.8, y: 2.1, w: 9.73, h: 3.0, rectRadius: 0.12,
     fill: { color: C.cardLt }, line: { color: C.orange, width: 1.75 } });
-  s.addText("持ち帰ってほしいのは、たった1つ", { x: 1.8, y: 2.45, w: 9.73, h: 0.7,
+  s.addText("持ち帰ってほしいのは、たった2つ", { x: 1.8, y: 2.45, w: 9.73, h: 0.7,
     align: "center", fontSize: 22, color: C.muted, fontFace: FONT });
-  s.addText("「進路も、好きも、複数あっていい」", { x: 1.8, y: 3.25, w: 9.73, h: 1.1,
-    align: "center", fontSize: 32, bold: true, color: C.white, fontFace: FONT });
-  s.addText("全部は覚えなくてOK。これ1つだけ。", { x: 1.8, y: 4.35, w: 9.73, h: 0.6,
+  s.addText("「分散しよう」と「つくる側に回ろう」", { x: 1.8, y: 3.25, w: 9.73, h: 1.1,
+    align: "center", fontSize: 30, bold: true, color: C.white, fontFace: FONT });
+  s.addText("全部は覚えなくてOK。この2つだけ。", { x: 1.8, y: 4.35, w: 9.73, h: 0.6,
     align: "center", fontSize: 18, color: C.orange, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
 // 3. 今日の流れ
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "今日の流れ");
   barList(s, [
     { c: C.teal,   main: "① 自己紹介 — ちょっと変わった大人の話", sub: "本業のかたわら、色々やっています" },
     { c: C.orange, main: "② ワーク — 仕事に何を求める？",         sub: "書いて、何人かに聞きます" },
-    { c: C.purple, main: "③ 「分散」という考え方",                 sub: "一つに全部を賭けない、という発想" },
+    { c: C.purple, main: "③ 2つの柱 — 「分散」と「場をつくる」",   sub: "今日のメインの話" },
     { c: C.green2, main: "④ 進路の話 ＆ Q&A",                      sub: "最後はなんでも聞いてください" },
   ], { y: 1.75, h: 1.05, gap: 0.2 });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
 // 4. アイスブレイク
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("将来やりたいこと、\nもう決まってる人？", { x: 0.5, y: 1.9, w: 12.3, h: 2.0,
     align: "center", fontSize: 42, bold: true, color: C.white, fontFace: FONT, lineSpacingMultiple: 1.15 });
   s.addText("決まってなくて全然OK。\n今日はむしろ「今は決めなくていい」という話をします。",
     { x: 0.5, y: 4.4, w: 12.3, h: 1.2, align: "center",
       fontSize: 20, color: C.teal, fontFace: FONT, lineSpacingMultiple: 1.2 });
   hint(s, "（手を挙げてもらう／その場で2〜3人に聞く）");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
 // 5. 集中と分散：働き方の考え方
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "集中と分散：働き方の考え方");
   const cards = [
     { x: 1.0, accent: C.coral, head: "集中（Concentration）", emoji: "🔦",
@@ -144,14 +156,14 @@ let N = 0; // スライド番号カウンタ
       fontSize: 14, color: C.muted, fontFace: FONT });
   });
   hint(s, "※岡田斗司夫さんの「分散の考え方」を参考に……");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 6. 進路も分散してみませんか + 活動グリッド（6分類）※タイトル維持
+// 6. 活動グリッド（6分類）※維持
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("進路も分散してみませんか", { x: 0.4, y: 0.25, w: 12.5, h: 0.9, align: "center",
     fontSize: 36, bold: true, color: C.white, fontFace: FONT });
   s.addText([
@@ -180,14 +192,14 @@ let N = 0; // スライド番号カウンタ
       fontSize: 13, color: C.sub, fontFace: FONT, valign: "top", lineSpacingMultiple: 1.15 });
   });
   hint(s, "なんでこんなに色々やってるの？");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
 // 7. 人生目標 3層構造 ※維持
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "人生目標：「人と人の間に場を作り、間をなくす」", C.orange);
   const cols = [
     { x: 0.55, accent: C.teal,   head: "① 場を作る",      sub: "〜目標に直結する〜",
@@ -211,15 +223,15 @@ let N = 0; // スライド番号カウンタ
     fill: { color: C.cardLt }, line: { color: C.green2, width: 1.25 } });
   s.addText("これらの基となるたくさんのバイト in 学生時代", { x: 0.55, y: 5.4, w: 12.23, h: 0.95,
     align: "center", fontSize: 22, bold: true, color: C.white, fontFace: FONT });
-  hint(s, "色々やってるけど、軸は1つ");
-  footer(s, N);
+  hint(s, "“場を作る”が一番上にある — 今日の後半の伏線です");
+  footer(s);
 })();
 
 // =====================================================================
-// 8. ある1週間の使い方（分散の実例）NEW
+// 8. ある1週間の使い方 ※維持
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "分散って、具体的にはこういうこと");
   s.addText("僕のある1週間", { x: 0.6, y: 1.2, w: 12, h: 0.5, fontSize: 16, color: C.muted, fontFace: FONT });
   const blocks = [
@@ -242,14 +254,14 @@ let N = 0; // スライド番号カウンタ
     y += 1.13;
   });
   hint(s, "一人の中に、いくつもの顔がある");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 9. 学生時代のバイト/仕事歴（写真4枚）※維持
+// 9. 学生時代のバイト/仕事歴 ※維持
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("学生時代のバイト/仕事歴", { x: 0.6, y: 0.3, w: 12, h: 0.8,
     fontSize: 30, bold: true, color: C.green2, fontFace: FONT });
   const photos = [
@@ -266,26 +278,26 @@ let N = 0; // スライド番号カウンタ
       fontSize: 18, bold: true, color: C.white, fontFace: FONT, lineSpacingMultiple: 1.15 });
   });
   hint(s, "いろんな仕事がありますが……");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
 // 10. 仕事に何を求めますか？？（問い）※維持
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("仕事に何を求めますか？？", { x: 0.5, y: 2.6, w: 12.3, h: 1.4, align: "center",
     fontSize: 46, bold: true, color: C.white, fontFace: FONT });
   s.addText("※複数OKです", { x: 0.5, y: 4.1, w: 12.3, h: 0.6, align: "center",
     fontSize: 20, color: C.muted, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 11. ★WORK① まず書いてみよう（2分）
+// 11. WORK① まず書いてみよう（2分）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addShape("roundRect", { x: 4.4, y: 0.45, w: 4.5, h: 0.7, rectRadius: 0.35, fill: { color: C.orange } });
   s.addText("WORK ①  まず書いてみよう", { x: 4.4, y: 0.45, w: 4.5, h: 0.7, align: "center",
     fontSize: 20, bold: true, color: C.bg, fontFace: FONT });
@@ -313,14 +325,14 @@ let N = 0; // スライド番号カウンタ
   ], { x: 2.0, y: 4.1, w: 9.3, h: 1.8, valign: "middle", fontFace: FONT, lineSpacingMultiple: 1.25 });
   s.addText("⏱ 制限時間 2分 — 紙でも、頭の中でもOK", { x: 0.5, y: 6.25, w: 12.3, h: 0.6,
     align: "center", fontSize: 22, bold: true, color: C.orange, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 12. ★WORK② みんなのを見てみよう（発表）
+// 12. WORK② みんなのを見てみよう（発表）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addShape("roundRect", { x: 4.4, y: 0.45, w: 4.5, h: 0.7, rectRadius: 0.35, fill: { color: C.teal } });
   s.addText("WORK ②  みんなのを見てみよう", { x: 4.4, y: 0.45, w: 4.5, h: 0.7, align: "center",
     fontSize: 20, bold: true, color: C.bg, fontFace: FONT });
@@ -342,28 +354,33 @@ let N = 0; // スライド番号カウンタ
   });
   s.addText("👉 答えは人によってバラバラ。それで正解。", { x: 0.5, y: 6.15, w: 12.3, h: 0.6,
     align: "center", fontSize: 22, bold: true, color: C.teal, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 13. 答えはバラバラでいい NEW
+// 13. 答えはバラバラでいい
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("答えは、人によってバラバラ", { x: 0.5, y: 2.1, w: 12.3, h: 1.0, align: "center",
     fontSize: 40, bold: true, color: C.white, fontFace: FONT });
   s.addText("それで、いい。", { x: 0.5, y: 3.3, w: 12.3, h: 0.9, align: "center",
     fontSize: 36, bold: true, color: C.teal, fontFace: FONT });
   s.addText("でも——全部を「1つの仕事」で満たそうとすると、ちょっと苦しい。", { x: 0.5, y: 4.6, w: 12.3, h: 0.7,
     align: "center", fontSize: 20, color: C.muted, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 14. 5要素の提示（答え合わせ）※維持
+// 14. 〔章扉〕柱① 分散
+// =====================================================================
+chapter("ここからが、1つ目の柱", "柱 ①", "分散", "一つに全部を賭けない", C.teal);
+
+// =====================================================================
+// 15. 5要素（答え合わせ）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "仕事に何を求めますか？？");
   s.addText("※よく挙がるのは、この5つ", { x: 0.5, y: 1.25, w: 12.3, h: 0.5, align: "center",
     fontSize: 18, color: C.muted, fontFace: FONT });
@@ -380,47 +397,47 @@ let N = 0; // スライド番号カウンタ
       fontSize: 24, bold: true, color: it.c, fontFace: FONT });
     cx += cw + gap;
   });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 15. 全部満たせる仕事ある？※維持
+// 16. 全部満たせる仕事ある？
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("全部満たせる仕事、\n見つかりますか？", { x: 0.5, y: 2.3, w: 12.3, h: 2.2, align: "center",
     fontSize: 46, bold: true, color: C.white, fontFace: FONT, lineSpacingMultiple: 1.15 });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 16. ムリだと思った ※維持
+// 17. ムリだと思った
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText([
     { text: "”すっごく”ムリムリだ\n", options: { color: C.orange } },
     { text: "と思いました……", options: { color: C.white } },
   ], { x: 0.5, y: 2.4, w: 12.3, h: 2.0, align: "center",
     fontSize: 44, bold: true, fontFace: FONT, lineSpacingMultiple: 1.15 });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 17. そこで ※維持
+// 18. そこで
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("そこで", { x: 0.5, y: 3.0, w: 12.3, h: 1.4, align: "center",
     fontSize: 54, bold: true, color: C.teal, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 18. 集中のメリット・デメリット NEW
+// 19. 集中のメリット・デメリット
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "「集中」のいいところ・しんどいところ", C.coral);
   s.addShape("roundRect", { x: 1.0, y: 1.7, w: 11.33, h: 1.7, rectRadius: 0.1,
     fill: { color: C.card }, line: { color: C.green2, width: 1.25 } });
@@ -435,14 +452,14 @@ let N = 0; // スライド番号カウンタ
     { text: "・コケたとき、全部いっぺんに失う\n・視野がせまくなりがち", options: { fontSize: 19, color: C.white } },
   ], { x: 1.4, y: 3.75, w: 10.5, h: 1.4, valign: "middle", fontFace: FONT, lineSpacingMultiple: 1.2 });
   hint(s, "じゃあ「分散」はどうだろう？");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 19. 分散のメリット・デメリット NEW
+// 20. 分散のメリット・デメリット
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "「分散」のいいところ・しんどいところ", C.teal);
   s.addShape("roundRect", { x: 1.0, y: 1.55, w: 11.33, h: 1.9, rectRadius: 0.1,
     fill: { color: C.card }, line: { color: C.green2, width: 1.25 } });
@@ -457,14 +474,14 @@ let N = 0; // スライド番号カウンタ
     { text: "・すぐには突き抜けない／時間がかかる", options: { fontSize: 19, color: C.white } },
   ], { x: 1.4, y: 3.75, w: 10.5, h: 1.2, valign: "middle", fontFace: FONT, lineSpacingMultiple: 1.2 });
   hint(s, "高校生の今は「分散」が向いている、というのが今日の提案");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 20. 分散フレーム（岡田斗司夫）
+// 21. 分散フレーム（岡田斗司夫）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("一つの仕事に「全部」を求めない ： 分散", { x: 0.4, y: 0.5, w: 12.5, h: 0.8,
     align: "center", fontSize: 30, bold: true, color: C.white, fontFace: FONT });
   s.addText("岡田斗司夫さんの考え方より", { x: 0.6, y: 1.3, w: 12, h: 0.4,
@@ -491,14 +508,14 @@ let N = 0; // スライド番号カウンタ
   s.addText("お金はA、やりがいはB、人間関係はC……と「分けて」手に入れる", { x: 0.5, y: 4.7, w: 12.3, h: 0.7,
     align: "center", fontSize: 20, color: C.white, fontFace: FONT });
   hint(s, "これを自分に当てはめると……");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 21. 私の場合 NEW（分離）
+// 22. 私の場合
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "私の場合の「分散」");
   const rows = [
     { c: C.coral,  l: "Dell（本業）",        r: "お金" },
@@ -521,14 +538,14 @@ let N = 0; // スライド番号カウンタ
     fill: { color: C.cardLt }, line: { color: C.green2, width: 1.25 } });
   s.addText("一つの仕事が多少しんどくても、他のところでバランスが取れる", { x: 1.5, y: 5.85, w: 10.33, h: 0.85,
     align: "center", valign: "middle", fontSize: 18, bold: true, color: C.white, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 22. 分散の誤解（器用貧乏では？）→反論 NEW
+// 23. 分散の誤解（器用貧乏では？）→反論
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addShape("roundRect", { x: 2.0, y: 0.9, w: 9.33, h: 0.9, rectRadius: 0.1,
     fill: { color: C.card }, line: { color: C.coral, width: 1.5 } });
   s.addText("「分散って、ただの器用貧乏では？」", { x: 2.0, y: 0.9, w: 9.33, h: 0.9,
@@ -540,14 +557,14 @@ let N = 0; // スライド番号カウンタ
     { c: C.purple, main: "② バラバラの経験は、つながると「自分だけの武器」になる" },
     { c: C.green2, main: "③ 続けられる人が、結局いちばん遠くまで行ける" },
   ], { y: 2.7, h: 1.05, gap: 0.25 });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 23. 分散は「掛け算」になる NEW
+// 24. 分散は「掛け算」になる
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "バラバラの「好き」は、ある日つながる", C.orange);
   s.addText("分散は、足し算じゃなくて掛け算になる", { x: 0.5, y: 1.2, w: 12.3, h: 0.5,
     align: "center", fontSize: 18, color: C.muted, fontFace: FONT });
@@ -570,14 +587,14 @@ let N = 0; // スライド番号カウンタ
     y += 1.4;
   });
   hint(s, "なんでこの考えに至ったのか……");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 24. とにかく失敗が多かった ※維持
+// 25. とにかく失敗が多かった
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "とにかく失敗が多かった……", C.white);
   const items = [
     { n: "1", t: "インターン2社同時 → 電車に2社分のPCを忘れた", c: C.coral },
@@ -596,14 +613,14 @@ let N = 0; // スライド番号カウンタ
     y += 1.3;
   });
   hint(s, "中でも忘れられないのが……");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 25. 失敗深掘り①PC NEW
+// 26. 失敗①PC
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("失敗エピソード ①", { x: 0.6, y: 0.4, w: 12, h: 0.6, fontSize: 18, color: C.coral, fontFace: FONT });
   s.addText("インターンを2社、同時にやった結果……", { x: 0.5, y: 1.1, w: 12.3, h: 0.9,
     align: "center", fontSize: 30, bold: true, color: C.white, fontFace: FONT });
@@ -614,14 +631,14 @@ let N = 0; // スライド番号カウンタ
     { text: "頭が真っ白。会社にも平謝り。\n「両立」って、見た目以上に難しい。", options: { fontSize: 20, color: C.white } },
   ], { x: 1.9, y: 2.6, w: 9.5, h: 2.2, valign: "middle", align: "center", fontFace: FONT, lineSpacingMultiple: 1.2 });
   hint(s, "※どうやって取り返したかは、Q&Aで");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 26. 失敗深掘り②留年 NEW
+// 27. 失敗②留年
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("失敗エピソード ②", { x: 0.6, y: 0.4, w: 12, h: 0.6, fontSize: 18, color: C.orange, fontFace: FONT });
   s.addText("大学を、留年した", { x: 0.5, y: 1.1, w: 12.3, h: 0.9,
     align: "center", fontSize: 34, bold: true, color: C.white, fontFace: FONT });
@@ -631,14 +648,14 @@ let N = 0; // スライド番号カウンタ
     { text: "色々やりすぎて、単位を落とした。\n学費は、自分で払った。\n\n", options: { fontSize: 22, color: C.white } },
     { text: "正直しんどかった。でも——「終わり」ではなかった。", options: { fontSize: 22, bold: true, color: C.orange } },
   ], { x: 1.9, y: 2.6, w: 9.5, h: 2.2, valign: "middle", align: "center", fontFace: FONT, lineSpacingMultiple: 1.2 });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 27. でも、折れなかった（分散の効用）NEW
+// 28. でも、折れなかった
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("でも、折れなかった", { x: 0.5, y: 1.5, w: 12.3, h: 1.0, align: "center",
     fontSize: 42, bold: true, color: C.teal, fontFace: FONT });
   s.addShape("roundRect", { x: 1.5, y: 2.9, w: 10.33, h: 2.3, rectRadius: 0.1,
@@ -648,14 +665,14 @@ let N = 0; // スライド番号カウンタ
     { text: "\n「分散」は、心を守るセーフティネットにもなる。", options: { fontSize: 22, bold: true, color: C.teal } },
   ], { x: 1.9, y: 3.1, w: 9.5, h: 1.9, valign: "middle", align: "center", fontFace: FONT, lineSpacingMultiple: 1.2 });
   hint(s, "だから、進路の話に戻ります");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 28. 内部進学への一言（レール肯定+上乗せ）
+// 29. 明治に上がる人へ（内部進学）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "明治に上がる人へ", C.orange);
   s.addShape("roundRect", { x: 1.2, y: 1.6, w: 10.93, h: 1.5, rectRadius: 0.1,
     fill: { color: C.card }, line: { color: C.green2, width: 1.5 } });
@@ -671,14 +688,14 @@ let N = 0; // スライド番号カウンタ
     { text: "を、今から考えておくと、めちゃくちゃ強い。", options: { fontSize: 22, bold: true, color: C.orange } },
   ], { x: 1.6, y: 3.55, w: 10.1, h: 1.9, valign: "middle", align: "center", fontFace: FONT, lineSpacingMultiple: 1.2 });
   hint(s, "じゃあ、何を分散させる？");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 29. 大学の4年間で何を分散させる？ NEW
+// 30. 大学の4年間で何を分散させる？
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "大学の4年間で、分散できること");
   const grid = [
     { emoji: "📚", head: "学問・研究",     items: ["専攻＋他学部の授業"], c: C.teal },
@@ -702,14 +719,14 @@ let N = 0; // スライド番号カウンタ
       fontSize: 14, color: C.sub, fontFace: FONT, valign: "top" });
   });
   hint(s, "全部やらなくていい。種を「複数」まいておくだけ");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 30. 進路を「分散」しませんか（高1向け）
+// 31. 進路を「分散」しませんか（高1向け）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("そこで提案します！", { x: 0.6, y: 0.35, w: 12, h: 0.5, fontSize: 18, color: C.muted, fontFace: FONT });
   s.addText("進路を「分散」しませんか", { x: 0.4, y: 0.85, w: 12.5, h: 1.0, align: "center",
     fontSize: 44, bold: true, color: C.white, fontFace: FONT });
@@ -718,15 +735,247 @@ let N = 0; // スライド番号カウンタ
     { c: C.purple, main: "没頭できる物語は無数にある",       sub: "——燃え尽きるほど一点に賭けなくていい" },
     { c: C.white,  main: "これからの3年間・大学の4年間をどう使うか", sub: "進路は“いつ決めるか”より“どう分散させておくか”" },
   ], { y: 2.15, h: 1.25, gap: 0.15 });
-  hint(s, "【よくある不安】分散したら失敗してしまうかも……");
-  footer(s, N);
+  hint(s, "……でも、分散には、もう一つ大事な相棒がいます");
+  footer(s);
 })();
 
 // =====================================================================
-// 31. 進路に「失敗」はない ※維持（強い）
+// 32. 〔章扉〕柱② 場をつくる
+// =====================================================================
+chapter("そして、もう一つの柱", "柱 ②", "場をつくる", "「客」をやめて、つくる側に回る", C.orange);
+
+// =====================================================================
+// 33. もう一つだけ。「客」をやめてみる ★
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
+  title(s, "もう一つだけ。「客」をやめてみる", C.orange);
+  s.addShape("roundRect", { x: 1.2, y: 1.7, w: 10.93, h: 1.7, rectRadius: 0.1,
+    fill: { color: C.card }, line: { color: C.border, width: 1 } });
+  s.addText("イベントも、部活も、教室も——\n参加する「だけ」じゃなく、つくる側／運営側に一回立ってみる",
+    { x: 1.6, y: 1.7, w: 10.1, h: 1.7, valign: "middle", align: "center",
+      fontSize: 22, color: C.white, fontFace: FONT, lineSpacingMultiple: 1.25 });
+  s.addText("見える景色が、180°変わる", { x: 0.5, y: 3.9, w: 12.3, h: 1.2, align: "center",
+    fontSize: 40, bold: true, color: C.orange, fontFace: FONT });
+  hint(s, "文化祭、お客さんで回るのと企画する側。どっちが記憶に残る？");
+  footer(s);
+})();
+
+// =====================================================================
+// 34. そもそも「場」って？
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "そもそも「場」って？");
+  s.addShape("roundRect", { x: 2.0, y: 1.7, w: 9.33, h: 1.2, rectRadius: 0.1,
+    fill: { color: C.cardLt }, line: { color: C.teal, width: 1.5 } });
+  s.addText("人が集まって、何かが生まれるところ", { x: 2.0, y: 1.7, w: 9.33, h: 1.2,
+    align: "center", valign: "middle", fontSize: 26, bold: true, color: C.white, fontFace: FONT });
+  const chips = ["教室", "部活", "コミケ", "LINEグループ", "文化祭", "この講話も"];
+  const cw = 3.7, ch = 0.85, gx = 0.25, gy = 0.25, x0 = 1.35, y0 = 3.3;
+  const cols = [C.teal, C.purple, C.coral, C.green2, C.orange, C.blue];
+  chips.forEach((t, i) => {
+    const col = i % 3, row = Math.floor(i / 3);
+    const x = x0 + col * (cw + gx), y = y0 + row * (ch + gy);
+    s.addShape("roundRect", { x, y, w: cw, h: ch, rectRadius: 0.4,
+      fill: { color: C.card }, line: { color: cols[i], width: 1.25 } });
+    s.addText(t, { x, y, w: cw, h: ch, align: "center", valign: "middle",
+      fontSize: 19, bold: true, color: cols[i], fontFace: FONT });
+  });
+  hint(s, "大それたものじゃない。2人集まれば、もう「場」。");
+  footer(s);
+})();
+
+// =====================================================================
+// 35. 客 vs 主催（対比）
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "「客」と「つくる側」、何が違う？");
+  const cards = [
+    { x: 1.0, accent: C.coral, head: "客のまま", items: ["受け取るだけ", "記憶に残りにくい", "つながりは浅い"] },
+    { x: 7.0, accent: C.teal,  head: "つくる側", items: ["自分ごとになる", "濃い経験が残る", "人とつながる"] },
+  ];
+  cards.forEach(c => {
+    s.addShape("roundRect", { x: c.x, y: 1.6, w: 5.3, h: 3.5, rectRadius: 0.12,
+      fill: { color: C.card }, line: { color: c.accent, width: 1.5 } });
+    s.addText(c.head, { x: c.x, y: 1.85, w: 5.3, h: 0.7, align: "center",
+      fontSize: 26, bold: true, color: c.accent, fontFace: FONT });
+    s.addText(c.items.map(t => "・" + t).join("\n"), { x: c.x + 0.5, y: 2.7, w: 4.3, h: 2.2,
+      fontSize: 21, color: C.white, fontFace: FONT, valign: "top", lineSpacingMultiple: 1.5 });
+  });
+  s.addText("一回でいいから、つくる側に立ってみてほしい", { x: 0.5, y: 5.5, w: 12.3, h: 0.7,
+    align: "center", fontSize: 22, bold: true, color: C.orange, fontFace: FONT });
+  footer(s);
+})();
+
+// =====================================================================
+// 36. 場づくりの具体例
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "僕がつくってきた「場」", C.green2);
+  const grid = [
+    { emoji: "🏛", head: "コミケ運営",   sub: "更衣室担当のスタッフ", c: C.blue },
+    { emoji: "🏫", head: "まなびの場",   sub: "まなびハウス",         c: C.coral },
+    { emoji: "🚌", head: "バス旅行",     sub: "企画・運営・運転まで", c: C.green2 },
+    { emoji: "🎤", head: "この講話",     sub: "今この時間も一つの場", c: C.orange },
+  ];
+  const cw = 5.5, ch = 1.85, gx = 0.4, gy = 0.35, x0 = 1.0, y0 = 1.6;
+  grid.forEach((g, i) => {
+    const col = i % 2, row = Math.floor(i / 2);
+    const x = x0 + col * (cw + gx), y = y0 + row * (ch + gy);
+    s.addShape("roundRect", { x, y, w: cw, h: ch, rectRadius: 0.1,
+      fill: { color: C.card }, line: { color: g.c, width: 1.25 } });
+    s.addText(g.emoji, { x: x + 0.3, y, w: 1.1, h: ch, align: "center", valign: "middle", fontSize: 36, fontFace: FONT });
+    s.addText([
+      { text: g.head + "\n", options: { fontSize: 22, bold: true, color: g.c } },
+      { text: g.sub, options: { fontSize: 15, color: C.sub } },
+    ], { x: x + 1.5, y, w: cw - 1.7, h: ch, valign: "middle", fontFace: FONT, lineSpacingMultiple: 1.2 });
+  });
+  hint(s, "バラバラに見える活動、実は全部「場」だった");
+  footer(s);
+})();
+
+// =====================================================================
+// 37. 場は、小さくていい
+// =====================================================================
+(() => {
+  const s = newSlide();
+  s.addText("場は、小さくていい", { x: 0.5, y: 1.4, w: 12.3, h: 1.0, align: "center",
+    fontSize: 44, bold: true, color: C.teal, fontFace: FONT });
+  barList(s, [
+    { c: C.teal,   main: "友だち2人で始める勉強会" },
+    { c: C.purple, main: "好きな人を集めた撮影会・上映会" },
+    { c: C.orange, main: "クラスの小さな企画・出し物" },
+  ], { y: 2.9, h: 0.95, gap: 0.25 });
+  s.addText("いきなり大きくしなくていい。小さく始める。", { x: 0.5, y: 6.2, w: 12.3, h: 0.6,
+    align: "center", fontSize: 20, color: C.muted, fontFace: FONT });
+  footer(s);
+})();
+
+// =====================================================================
+// 38. つくる側で、人とつながれた（実体験）
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "つくる側に回って、変わったこと");
+  s.addShape("roundRect", { x: 1.2, y: 1.7, w: 10.93, h: 3.5, rectRadius: 0.1,
+    fill: { color: C.card }, line: { color: C.green2, width: 1.25 } });
+  s.addText([
+    { text: "コミケの更衣室担当、まなびの場づくり——\n", options: { fontSize: 22, color: C.white } },
+    { text: "「参加者」から「運営」に回った瞬間、\n", options: { fontSize: 22, color: C.white } },
+    { text: "急に、人とつながれた。\n\n", options: { fontSize: 26, bold: true, color: C.green2 } },
+    { text: "バラバラだった僕の活動が、\n「場」を通して、人とつながっていった。", options: { fontSize: 22, bold: true, color: C.white } },
+  ], { x: 1.7, y: 1.9, w: 9.9, h: 3.1, valign: "middle", align: "center", fontFace: FONT, lineSpacingMultiple: 1.25 });
+  footer(s);
+})();
+
+// =====================================================================
+// 39. 場をつくると、人との「間」がなくなる ★（人生目標コールバック）
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "場をつくると、人との「間」がなくなる", C.orange);
+  s.addShape("roundRect", { x: 1.2, y: 1.65, w: 10.93, h: 2.0, rectRadius: 0.1,
+    fill: { color: C.card }, line: { color: C.border, width: 1 } });
+  s.addText([
+    { text: "自分の「場」を持つと、そこに人が集まる。\n", options: { fontSize: 22, color: C.white } },
+    { text: "分散していたバラバラの点が、場を通してつながる。", options: { fontSize: 22, color: C.white } },
+  ], { x: 1.6, y: 1.65, w: 10.1, h: 2.0, valign: "middle", align: "center", fontFace: FONT, lineSpacingMultiple: 1.3 });
+  s.addShape("roundRect", { x: 2.5, y: 3.95, w: 8.33, h: 1.3, rectRadius: 0.12,
+    fill: { color: C.cardLt }, line: { color: C.orange, width: 1.75 } });
+  s.addText("分散 × 場づくり ＝ 自分の生き方", { x: 2.5, y: 3.95, w: 8.33, h: 1.3,
+    align: "center", valign: "middle", fontSize: 30, bold: true, color: C.orange, fontFace: FONT });
+  hint(s, "そういえば、僕の人生目標は……");
+  footer(s);
+})();
+
+// =====================================================================
+// 40. 分散 × 場づくり：点が線になる（図）
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "バラバラの点が、場を通して「線」になる");
+  const mx = 6.66, my = 3.7;          // 中心（場）
+  const dots = [
+    { x: 2.0,  y: 2.2, t: "本業",       c: C.teal },
+    { x: 11.0, y: 2.2, t: "カメラ",     c: C.purple },
+    { x: 1.5,  y: 4.6, t: "執筆",       c: C.orange },
+    { x: 11.4, y: 4.6, t: "教育",       c: C.coral },
+    { x: 6.66, y: 5.6, t: "コミュニティ", c: C.green2 },
+  ];
+  // 線（先に描いてノードを上に重ねる）
+  dots.forEach(d => {
+    const x = Math.min(d.x, mx), y = Math.min(d.y, my);
+    const w = Math.abs(d.x - mx), h = Math.abs(d.y - my);
+    const flipV = (Math.sign(d.x - mx) !== Math.sign(d.y - my));
+    s.addShape("line", { x, y, w, h, line: { color: C.border, width: 1.5 }, flipV });
+  });
+  // 中心「場」
+  s.addShape("roundRect", { x: mx - 1.0, y: my - 0.55, w: 2.0, h: 1.1, rectRadius: 0.12,
+    fill: { color: C.orange } });
+  s.addText("場", { x: mx - 1.0, y: my - 0.55, w: 2.0, h: 1.1, align: "center", valign: "middle",
+    fontSize: 30, bold: true, color: C.bg, fontFace: FONT });
+  // 点
+  dots.forEach(d => {
+    s.addShape("ellipse", { x: d.x - 0.7, y: d.y - 0.35, w: 1.4, h: 0.7,
+      fill: { color: C.card }, line: { color: d.c, width: 1.5 } });
+    s.addText(d.t, { x: d.x - 0.85, y: d.y - 0.35, w: 1.7, h: 0.7, align: "center", valign: "middle",
+      fontSize: 14, bold: true, color: d.c, fontFace: FONT });
+  });
+  hint(s, "分散（点）× 場づくり（つなぐ）＝ 自分だけの形");
+  footer(s);
+})();
+
+// =====================================================================
+// 41. 高校でできる「場づくり」の一歩
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "高校で、今からできる「場づくり」", C.orange);
+  barList(s, [
+    { c: C.coral,  main: "文化祭・体育祭の実行委員に手を挙げる" },
+    { c: C.teal,   main: "部活で、新しい企画を自分から立てる" },
+    { c: C.purple, main: "小さな集まり（勉強会・撮影会）を主催する" },
+    { c: C.green2, main: "SNSで発信して、人を集めてみる" },
+  ], { y: 1.75, h: 1.05, gap: 0.22 });
+  hint(s, "一回でいい。「客」から「つくる側」へ");
+  footer(s);
+})();
+
+// =====================================================================
+// 42. おさらい：2つの柱
+// =====================================================================
+(() => {
+  const s = newSlide();
+  title(s, "今日の2つの柱");
+  const cards = [
+    { x: 1.0, accent: C.teal,   tag: "柱 ①", head: "分散", sub: "好きを複数持つ\n一つに全部賭けない" },
+    { x: 7.0, accent: C.orange, tag: "柱 ②", head: "場をつくる", sub: "「客」をやめて\nつくる側に回る" },
+  ];
+  cards.forEach(c => {
+    s.addShape("roundRect", { x: c.x, y: 1.7, w: 5.3, h: 3.6, rectRadius: 0.12,
+      fill: { color: C.card }, line: { color: c.accent, width: 1.75 } });
+    s.addText(c.tag, { x: c.x, y: 2.0, w: 5.3, h: 0.5, align: "center",
+      fontSize: 18, color: c.accent, fontFace: FONT });
+    s.addText(c.head, { x: c.x, y: 2.55, w: 5.3, h: 1.0, align: "center",
+      fontSize: 40, bold: true, color: C.white, fontFace: FONT });
+    s.addText(c.sub, { x: c.x + 0.3, y: 3.7, w: 4.7, h: 1.3, align: "center",
+      fontSize: 19, color: c.accent, fontFace: FONT, lineSpacingMultiple: 1.2 });
+  });
+  s.addText("✕", { x: 6.16, y: 2.9, w: 1.0, h: 1.0, align: "center", valign: "middle",
+    fontSize: 36, bold: true, color: C.muted, fontFace: FONT });
+  s.addText("この2本で、進路の話に戻ります", { x: 0.5, y: 5.6, w: 12.3, h: 0.6,
+    align: "center", fontSize: 20, color: C.muted, fontFace: FONT });
+  footer(s);
+})();
+
+// =====================================================================
+// 43. 進路に「失敗」はない ※維持（強い）
+// =====================================================================
+(() => {
+  const s = newSlide();
   s.addText("(たくさん失敗した植元が言う)", { x: 0.5, y: 0.4, w: 12.3, h: 0.5, align: "center",
     fontSize: 16, color: C.muted, fontFace: FONT });
   s.addText("進路に「失敗」はない", { x: 0.4, y: 0.85, w: 12.5, h: 0.9, align: "center",
@@ -741,35 +990,35 @@ let N = 0; // スライド番号カウンタ
     fontSize: 28, bold: true, color: C.white, fontFace: FONT });
   s.addText("失敗も、色々も、普通じゃないルートも —— 理由があれば「自分の進路」", { x: 0.5, y: 6.0, w: 12.3, h: 0.5,
     align: "center", fontSize: 16, color: C.muted, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 32. 高校3年間でできる分散（今日からの一歩）NEW
+// 44. 今日からできること（分散＋場づくり）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
-  title(s, "高校の3年間で、今日からできること", C.teal);
+  const s = newSlide();
+  title(s, "高校生活で、今日からできること", C.teal);
   barList(s, [
-    { c: C.teal,   main: "1. 好きなことを「3つ」書き出してみる" },
-    { c: C.orange, main: "2. やったことないことを「1つ」試してみる" },
-    { c: C.purple, main: "3. 部活・教室の外の場所に、顔を出してみる" },
-    { c: C.green2, main: "4. 小さく発信する（SNS・文章・動画なんでも）" },
-  ], { y: 1.75, h: 1.05, gap: 0.22 });
+    { c: C.teal,   main: "1. 好きなことを「3つ」書き出す", sub: "［分散］" },
+    { c: C.green2, main: "2. やったことないことを「1つ」試す", sub: "［分散］" },
+    { c: C.orange, main: "3. 一度でいいから、つくる側に立つ", sub: "［場づくり］" },
+    { c: C.purple, main: "4. 小さく発信する（SNS・文章・動画）", sub: "［場づくり］" },
+  ], { y: 1.7, h: 1.05, gap: 0.2 });
   hint(s, "大きく変えなくていい。種を増やすだけ");
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 33. 今日の持ち帰り（まとめ3点）NEW
+// 45. 今日の持ち帰り（3点）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   title(s, "今日の持ち帰り", C.orange);
   const items = [
-    { n: "1", c: C.teal,   t: "進路も「好き」も、複数あっていい" },
-    { n: "2", c: C.purple, t: "明治に上がるなら、大学4年で“何を分散させるか”を今から" },
-    { n: "3", c: C.orange, t: "進路に「失敗」はない（理由を言えれば自分の進路）" },
+    { n: "1", c: C.teal,   t: "進路も「好き」も、複数あっていい（分散）" },
+    { n: "2", c: C.orange, t: "「客」をやめて、つくる側に回る（場づくり）" },
+    { n: "3", c: C.purple, t: "進路に「失敗」はない（理由を言えれば自分の進路）" },
   ];
   let y = 1.75;
   items.forEach(it => {
@@ -782,20 +1031,39 @@ let N = 0; // スライド番号カウンタ
       fontSize: 20, bold: true, color: C.white, fontFace: FONT });
     y += 1.45;
   });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 34. Q & A（高1×内部進学トピック）
+// 46. 人生目標で締め（着地）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
+  s.addText("最後に、もう一度", { x: 0.5, y: 0.9, w: 12.3, h: 0.6, align: "center",
+    fontSize: 18, color: C.muted, fontFace: FONT });
+  s.addShape("roundRect", { x: 1.0, y: 1.7, w: 11.33, h: 1.5, rectRadius: 0.12,
+    fill: { color: C.cardLt }, line: { color: C.orange, width: 1.75 } });
+  s.addText("「人と人の間に場を作り、間をなくす」", { x: 1.0, y: 1.7, w: 11.33, h: 1.5,
+    align: "center", valign: "middle", fontSize: 30, bold: true, color: C.orange, fontFace: FONT });
+  s.addText("今日の話は、ぜんぶここにつながっています。\n分散して、場をつくる。それが、僕の生き方です。",
+    { x: 0.5, y: 3.5, w: 12.3, h: 1.5, align: "center",
+      fontSize: 22, color: C.white, fontFace: FONT, lineSpacingMultiple: 1.3 });
+  s.addText("ありがとうございました。", { x: 0.5, y: 5.4, w: 12.3, h: 0.8, align: "center",
+    fontSize: 26, bold: true, color: C.teal, fontFace: FONT });
+  footer(s);
+})();
+
+// =====================================================================
+// 47. Q & A
+// =====================================================================
+(() => {
+  const s = newSlide();
   s.addText("なんでも聞いてください", { x: 0.7, y: 0.4, w: 12, h: 0.8,
     fontSize: 30, bold: true, color: C.white, fontFace: FONT });
   s.addText("Q & A", { x: 0.7, y: 1.2, w: 12, h: 1.4,
     fontSize: 64, bold: true, color: C.orange, fontFace: FONT });
   const topics = [
-    "内部進学（明治）ってどう？", "大学の4年間、どう使う？", "「好き」の増やし方",
+    "内部進学（明治）ってどう？", "大学の4年間、どう使う？", "「場」のつくり方・はじめ方",
     "副業・フリーランスの話", "お金・給料のこと", "失敗談のつづき",
   ];
   const cw = 3.85, ch = 0.95, gx = 0.2, gy = 0.25, x0 = 0.7, y0 = 3.0;
@@ -807,16 +1075,16 @@ let N = 0; // スライド番号カウンタ
     s.addText(t, { x: x + 0.15, y, w: cw - 0.3, h: ch, align: "center", valign: "middle",
       fontSize: 17, color: C.sub, fontFace: FONT });
   });
-  s.addText("Q&Aは10分ほど取ります", { x: 0.7, y: 6.4, w: 12, h: 0.5,
+  s.addText("Q&Aは8〜10分ほど取ります", { x: 0.7, y: 6.4, w: 12, h: 0.5,
     fontSize: 16, color: C.muted, italic: true, fontFace: FONT });
-  footer(s, N);
+  footer(s);
 })();
 
 // =====================================================================
-// 35. 質問がなければ……（沈黙対策）
+// 48. 質問がなければ……（沈黙対策）
 // =====================================================================
 (() => {
-  const s = newSlide(); N++;
+  const s = newSlide();
   s.addText("質問がなければ……", { x: 0.7, y: 0.35, w: 12, h: 0.8,
     fontSize: 28, bold: true, color: C.muted, fontFace: FONT });
   const qs = [
@@ -835,7 +1103,7 @@ let N = 0; // スライド番号カウンタ
       fontSize: 21, bold: true, color: C.white, fontFace: FONT });
     y += 1.07;
   });
-  footer(s, N);
+  footer(s);
 })();
 
 if (N !== TOTAL) console.warn(`⚠ slide count ${N} != TOTAL ${TOTAL}`);
