@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      アプリのベーステーマ。実際の配色は Compose 側の ChunkPasteTheme が
+      Dynamic Color を用いて上書きするため、ここでは NoActionBar のみ指定する。
+    -->
+    <style name="Theme.ChunkPaste" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
