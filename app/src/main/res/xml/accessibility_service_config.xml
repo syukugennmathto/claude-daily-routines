@@ -6,4 +6,4 @@
     android:canRetrieveWindowContent="true"
     android:description="@string/accessibility_description"
     android:notificationTimeout="200"
-    android:packageNames="com.android.chrome,com.chrome.beta,com.chrome.dev,com.chrome.canary" />
+    android:packageNames="com.android.chrome,com.chrome.beta,com.chrome.dev,com.chrome.canary,com.brave.browser,com.brave.browser_beta,com.brave.browser_nightly" />

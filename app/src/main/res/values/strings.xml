@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">YouTube Blocker</string>
     <string name="accessibility_label">YouTube Blocker</string>
-    <string name="accessibility_description">指定した時間帯に Chrome で YouTube(youtube.com)を開くと、ブロック画面を表示します。アドレスバーの URL を読み取るためにこの権限を使用します。</string>
+    <string name="accessibility_description">指定した時間帯に Chrome または Brave で YouTube(youtube.com)を開くと、ブロック画面を表示します。アドレスバーの URL を読み取るためにこの権限を使用します。</string>
 
     <string name="block_title">YouTube はブロック中です</string>
-    <string name="block_message">設定した時間帯のため、Chrome での YouTube 閲覧はブロックされています。</string>
+    <string name="block_message">設定した時間帯のため、YouTube の閲覧はブロックされています。</string>
     <string name="close">閉じる</string>
 </resources>

@@ -24,22 +24,27 @@ class YouTubeBlockerService : AccessibilityService() {
     }
     private var overlayView: View? = null
 
-    private val chromePackages = setOf(
+    // Chromium-based browsers we support. Brave is Chromium-based, so it exposes the same
+    // url_bar view id as Chrome.
+    private val browserPackages = setOf(
         "com.android.chrome",
         "com.chrome.beta",
         "com.chrome.dev",
-        "com.chrome.canary"
+        "com.chrome.canary",
+        "com.brave.browser",
+        "com.brave.browser_beta",
+        "com.brave.browser_nightly"
     )
 
-    // Chrome exposes its address bar text under <package>:id/url_bar.
-    private val urlBarIds = chromePackages.map { "$it:id/url_bar" }
+    // Each browser exposes its address bar text under <package>:id/url_bar.
+    private val urlBarIds = browserPackages.map { "$it:id/url_bar" }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         val pkg = event?.packageName?.toString() ?: return
 
         // We only subscribe to Chrome packages (see accessibility_service_config.xml),
         // so anything else here is our own overlay window -> ignore it.
-        if (pkg !in chromePackages) return
+        if (pkg !in browserPackages) return
 
         val url = extractUrl()
         val isYouTube = url != null && isYouTubeUrl(url)

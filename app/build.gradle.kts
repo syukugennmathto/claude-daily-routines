@@ -15,8 +15,23 @@ android {
         versionName = "1.0"
     }
 
+    // Fixed signing key so every build shares the same signature -> the app updates in place
+    // (over-install) instead of forcing an uninstall each time.
+    signingConfigs {
+        create("blocker") {
+            storeFile = file("blocker-release.keystore")
+            storePassword = "blocker123"
+            keyAlias = "blocker"
+            keyPassword = "blocker123"
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("blocker")
+        }
         release {
+            signingConfig = signingConfigs.getByName("blocker")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
