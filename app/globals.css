@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #f7f4ed;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: theme("colors.ivory");
+    color: theme("colors.ink");
+    font-feature-settings: "palt" 1;
+  }
+
+  ::selection {
+    background-color: theme("colors.gold-soft");
+    color: theme("colors.ink");
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 500;
+    line-height: 1.28;
+  }
+
+  /* Comfortable Japanese reading rhythm */
+  .prose-editorial p {
+    line-height: 2.05;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.6em;
+    color: theme("colors.ink-soft");
+  }
+
+  .prose-editorial p:first-of-type {
+    margin-top: 0;
+  }
+}
+
+@layer components {
+  .container-editorial {
+    @apply mx-auto w-full max-w-editorial px-6 md:px-10;
+  }
+
+  .eyebrow {
+    @apply font-serif text-sm uppercase tracking-[0.32em] text-dusty-brown;
+  }
+
+  .rule {
+    @apply h-px w-full bg-light-gray;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-current transition-[width] duration-500 ease-editorial;
+  }
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
