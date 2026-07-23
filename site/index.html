@@ -75,7 +75,7 @@ img{display:block;max-width:100%}
   -webkit-text-stroke:6px #fff;paint-order:stroke fill;color:var(--orange);
   animation:pop .7s .1s cubic-bezier(.2,1.6,.4,1) both}
 .hero .sub{color:#fff;font-weight:700;font-size:17px;margin-bottom:14px;animation:swayin 1s .2s both}
-.hero .face{width:78px;margin:0 auto 20px;animation:bob 3.4s ease-in-out infinite}
+.hero .face{width:92px;margin:0 auto 20px;animation:bob 3.4s ease-in-out infinite}
 .chars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:end}
 .char{cursor:pointer;text-align:center}
 .char .imw{position:relative}
@@ -252,15 +252,19 @@ section{padding:44px 22px;position:relative}
 <!-- reusable SVG mascots -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <!-- simple void-face -->
-    <symbol id="hamface" viewBox="0 0 100 96">
-      <path d="M18 40c0-13 3-22 11-24 4-8 12-8 16 0 8 2 11 11 11 24 6 3 6 20-6 26-10 5-26 5-36 0-12-6-12-23-6-26z" fill="#efc99a" stroke="#7a5c3a" stroke-width="4"/>
-      <ellipse cx="30" cy="18" rx="7" ry="9" fill="#efc99a" stroke="#7a5c3a" stroke-width="4"/>
-      <ellipse cx="70" cy="18" rx="7" ry="9" fill="#efc99a" stroke="#7a5c3a" stroke-width="4"/>
-      <circle cx="40" cy="52" r="3.4" fill="#5a4028"/>
-      <circle cx="60" cy="52" r="3.4" fill="#5a4028"/>
-      <path d="M46 62c1.5 2.5 6.5 2.5 8 0" fill="none" stroke="#5a4028" stroke-width="3" stroke-linecap="round"/>
-      <ellipse cx="50" cy="60" rx="3" ry="2" fill="#c98b6a"/>
+    <!-- 虚無顔 void-face (clean) -->
+    <symbol id="hamface" viewBox="0 0 120 116">
+      <ellipse cx="35" cy="30" rx="14" ry="17" fill="#f6ecd8" stroke="#7a5c3a" stroke-width="4.5"/>
+      <ellipse cx="85" cy="30" rx="14" ry="17" fill="#f6ecd8" stroke="#7a5c3a" stroke-width="4.5"/>
+      <ellipse cx="35" cy="31" rx="6.5" ry="9" fill="#eaa9a9"/>
+      <ellipse cx="85" cy="31" rx="6.5" ry="9" fill="#eaa9a9"/>
+      <path d="M60 16C33 16 16 35 16 60c0 8 2 15 6 21 6 8 19 13 38 13s32-5 38-13c4-6 6-13 6-21 0-25-17-44-44-44z" fill="#f6ecd8" stroke="#7a5c3a" stroke-width="4.5"/>
+      <ellipse cx="33" cy="70" rx="8" ry="5" fill="#f2b8b8" opacity=".55"/>
+      <ellipse cx="87" cy="70" rx="8" ry="5" fill="#f2b8b8" opacity=".55"/>
+      <circle cx="46" cy="60" r="5" fill="#5a4028"/>
+      <circle cx="74" cy="60" r="5" fill="#5a4028"/>
+      <ellipse cx="60" cy="70" rx="4" ry="3" fill="#c98b6a"/>
+      <path d="M53 75q3.5 6 7 0 3.5 6 7 0" fill="none" stroke="#5a4028" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
     <!-- full-body cartoon hamster: uses var(--fur)/var(--belly)/var(--line) -->
     <symbol id="ham" viewBox="0 0 120 138">
