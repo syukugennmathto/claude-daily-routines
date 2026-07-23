@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>もっちり はむにぎり ｜ 握って癒される虚無顔ハムスター</title>
+<meta name="description" content="握って癒される虚無顔ハムスター「もっちり はむにぎり」特設サイト。もちもち・ふわふわの手のひらサイズぬいぐるみ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f5efe0;
+  --cream2:#efe7d4;
+  --ivory:#faf6ec;
+  --orange:#e79a3c;
+  --orange-d:#d98a2c;
+  --brown:#4a3d2c;
+  --brown-soft:#6b5a44;
+  --sage:#cdd7a4;
+  --sage-d:#bcc98e;
+  --peach:#ecceb8;
+  --pink:#e7a7a7;
+  --shadow:0 18px 40px -18px rgba(90,70,40,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+  color:var(--brown);
+  background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  line-height:1.85;
+}
+.baloo{font-family:"Baloo 2",cursive}
+img{display:block;max-width:100%}
+
+/* phone-frame layout */
+.wrap{max-width:600px;margin:0 auto;background:var(--ivory);position:relative;box-shadow:0 0 60px -20px rgba(120,90,50,.35)}
+
+/* floating side mascots (desktop only) */
+.side-deco{position:fixed;top:0;bottom:0;width:calc((100vw - 600px)/2);pointer-events:none;z-index:1;display:none}
+.side-deco.left{left:0}.side-deco.right{right:0}
+.side-deco svg{position:absolute;width:120px;opacity:.9;filter:drop-shadow(0 10px 16px rgba(120,90,50,.25))}
+@media(min-width:1000px){.side-deco{display:block}}
+
+/* ---------- top nav ---------- */
+.nav{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:1fr 1fr 1fr;
+  background:var(--ivory);border-bottom:1px solid #e6dcc4}
+.nav a{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 4px;
+  font-weight:700;font-size:15px;color:var(--brown);text-decoration:none;letter-spacing:.06em;
+  border-right:1px solid #e6dcc4;transition:background .25s,color .25s}
+.nav a:last-child{border-right:0}
+.nav a:hover{background:var(--orange);color:#fff}
+.nav .ic{width:20px;height:20px;fill:currentColor}
+.nav-prog{height:3px;background:linear-gradient(90deg,var(--orange),var(--peach));width:0;transition:width .1s}
+
+/* ---------- online shop bar ---------- */
+.shopbar{display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--cream2);position:relative;overflow:hidden}
+.shopbar .os{font-family:"Baloo 2",cursive;font-weight:800;font-size:26px;color:var(--brown);letter-spacing:.02em;white-space:nowrap}
+.shopbar .cta{flex:1;background:var(--orange);color:#fff;text-align:center;font-weight:700;
+  font-size:14px;line-height:1.5;padding:12px 10px;border-radius:16px;text-decoration:none;
+  box-shadow:0 8px 0 -2px var(--orange-d);transition:transform .18s,box-shadow .18s;animation:pulse 2.6s ease-in-out infinite}
+.shopbar .cta:hover{transform:translateY(2px);box-shadow:0 5px 0 -2px var(--orange-d)}
+.shopbar .peek{position:absolute;right:6px;top:-6px;width:70px;animation:bob 3s ease-in-out infinite}
+
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(180deg,var(--orange) 0%,var(--orange) 62%,var(--ivory) 62%,var(--ivory) 100%);
+  padding:34px 20px 0;text-align:center;position:relative;overflow:hidden}
+.hero .mocchiri{display:inline-block;font-weight:700;font-size:22px;color:#fff;
+  transform:rotate(-4deg);text-shadow:0 2px 0 rgba(0,0,0,.06);animation:swayin .9s ease both}
+.hero h1{font-weight:900;font-size:62px;line-height:1;color:#fff;letter-spacing:.02em;margin:2px 0 10px;
+  text-shadow:0 6px 0 rgba(0,0,0,.08),0 0 0 #fff;
+  -webkit-text-stroke:6px #fff;paint-order:stroke fill;color:var(--orange);
+  animation:pop .7s .1s cubic-bezier(.2,1.6,.4,1) both}
+.hero .sub{color:#fff;font-weight:700;font-size:17px;margin-bottom:14px;animation:swayin 1s .2s both}
+.hero .face{width:92px;margin:0 auto 20px;animation:bob 3.4s ease-in-out infinite}
+.chars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:end}
+.char{cursor:pointer;text-align:center}
+.char .imw{position:relative}
+.char svg{width:100%;transition:transform .3s}
+.char:hover svg{transform:translateY(-6px) rotate(-3deg)}
+.char.squish svg{animation:squish .5s ease}
+.char .nm{display:block;font-weight:700;font-size:14px;color:var(--brown);margin-top:2px}
+.hero .row-photo{margin:16px -20px 0;border-top:4px solid #fff}
+.hero .row-photo img{width:100%}
+
+/* ---------- section base ---------- */
+section{padding:44px 22px;position:relative}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.h2{text-align:center;font-weight:900;font-size:27px;color:var(--brown);margin-bottom:26px;line-height:1.5}
+.h2 .accent{color:var(--orange)}
+
+/* relax bubbles */
+.relax{background:var(--cream)}
+.bubble{background:var(--ivory);border-radius:26px;padding:20px 24px;text-align:center;font-weight:500;
+  font-size:16px;margin:0 auto 18px;max-width:460px;box-shadow:var(--shadow);position:relative}
+.bubble:hover{animation:jelly .6s ease}
+.relax .withcat{display:flex;align-items:center;gap:8px;justify-content:center}
+.relax .withcat .b3{flex:1;max-width:340px;margin:0}
+.relax .withcat svg{width:82px;flex:none;animation:bob 3s ease-in-out infinite}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px auto 6px;max-width:480px}
+.case{text-align:center}
+.emoji{width:100%;aspect-ratio:1;border-radius:50%;background:var(--ivory);box-shadow:var(--shadow);
+  display:grid;place-items:center;margin-bottom:8px;transition:transform .3s}
+.case:hover .emoji{transform:translateY(-4px) scale(1.05)}
+.emoji svg{width:66%}
+.case p{font-size:12.5px;font-weight:500;line-height:1.45}
+.relax .tagline{text-align:center;font-weight:700;font-size:20px;color:var(--brown-soft);margin-top:22px;
+  letter-spacing:.14em;transform:rotate(-2deg)}
+.relax .hands{margin:8px -22px -44px;position:relative}
+.relax .hands img{width:100%}
+
+/* POINT */
+.point{background:var(--ivory)}
+.point-title{text-align:center;font-family:"Baloo 2",cursive;font-weight:800;font-size:52px;
+  letter-spacing:.2em;color:var(--orange);margin-bottom:12px}
+.pt{margin-bottom:52px}
+.pt .no{text-align:center;font-family:"Baloo 2",cursive;font-weight:800;font-size:44px;color:var(--brown);line-height:1}
+.pt .ttl{text-align:center;font-weight:900;font-size:24px;color:var(--brown);margin:2px 0 18px;line-height:1.4}
+.photo-card{border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.photo-card img{width:100%}
+.float-in{position:relative}
+.floatimg{width:64%;margin:6px auto;animation:bob 3.6s ease-in-out infinite}
+.onoma{position:absolute;font-weight:700;color:var(--brown-soft);font-size:18px;opacity:0;transform:scale(.4)}
+.reveal.in .onoma{animation:pop .6s .4s cubic-bezier(.2,1.7,.4,1) forwards}
+
+/* cartoon hamster wave row */
+.toon-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:22px 0 8px}
+.toon-row svg{width:100%}
+.toon-row .arm{transform-origin:center;animation:wavehand 1.6s ease-in-out infinite}
+.toon-row li:nth-child(2) .arm{animation-delay:.2s}
+.toon-row li:nth-child(3) .arm{animation-delay:.4s}
+.toon-row li:nth-child(4) .arm{animation-delay:.6s}
+.toon-row{list-style:none}
+
+/* 05-08 green */
+.green-block{background:var(--sage);margin:0 -22px;padding:8px 22px 0;border-radius:36px 36px 0 0}
+.green-block img{width:100%;border-radius:24px}
+
+/* omoi */
+.omoi{background:linear-gradient(180deg,var(--sage) 0%,var(--peach) 12%,var(--cream2) 40%,var(--cream) 100%);
+  padding-top:70px}
+.omoi .h2{position:relative;display:inline-block;left:50%;transform:translateX(-50%)}
+.omoi .h2::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:4px;background:var(--brown);border-radius:4px}
+.omoi p{text-align:center;font-weight:500;font-size:16.5px;margin-bottom:22px;max-width:480px;margin-left:auto;margin-right:auto}
+.omoi .dash{color:var(--orange)}
+
+/* gallery */
+.gallery{background:var(--cream)}
+.grid-photo{border-radius:22px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:30px}
+.grid-photo img{width:100%}
+.thankwrap{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px}
+.thankyou{background:#fff;border-radius:40px;padding:16px 30px;font-family:"Baloo 2",cursive;font-weight:800;
+  font-size:30px;color:var(--brown);box-shadow:var(--shadow);position:relative;animation:bob 3s ease-in-out infinite}
+.thankyou::after{content:"";position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  border:12px solid transparent;border-left-color:#fff}
+.thankwrap img{width:120px;animation:bob 3.4s ease-in-out infinite .3s}
+
+/* footer */
+.footer{background:var(--orange);color:#fff;text-align:center;padding:34px 22px}
+.footer .fcta{display:inline-block;background:#fff;color:var(--orange);font-weight:800;font-size:16px;
+  padding:14px 34px;border-radius:30px;text-decoration:none;box-shadow:0 8px 0 -2px var(--orange-d);
+  transition:transform .18s,box-shadow .18s;margin-bottom:16px}
+.footer .fcta:hover{transform:translateY(2px);box-shadow:0 5px 0 -2px var(--orange-d)}
+.footer small{display:block;opacity:.9;font-size:12px;line-height:1.7;margin-top:6px}
+
+/* heart burst */
+.heart{position:fixed;pointer-events:none;font-size:22px;z-index:99;animation:heartup 1s ease-out forwards}
+
+/* keyframes */
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes swayin{from{opacity:0;transform:translateY(-14px) rotate(-4deg)}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 8px 0 -2px var(--orange-d),0 0 0 0 rgba(231,154,60,.45)}
+  50%{box-shadow:0 8px 0 -2px var(--orange-d),0 0 0 12px rgba(231,154,60,0)}}
+@keyframes squish{0%,100%{transform:scale(1,1)}30%{transform:scale(1.2,.8)}60%{transform:scale(.85,1.15)}}
+@keyframes jelly{0%,100%{transform:scale(1,1)}25%{transform:scale(1.04,.96)}50%{transform:scale(.98,1.02)}75%{transform:scale(1.02,.98)}}
+@keyframes wavehand{0%,100%{transform:rotate(0)}50%{transform:rotate(-22deg)}}
+@keyframes heartup{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-90px) scale(1.3)}}
+@keyframes heropop{0%{transform:translateY(20px) scale(.6);opacity:0}60%{transform:translateY(-6px) scale(1.08)}100%{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* ---------- loader ---------- */
+#loader{position:fixed;inset:0;z-index:200;background:var(--orange);display:grid;place-items:center;
+  transition:opacity .6s .2s,visibility .6s .2s}
+#loader.gone{opacity:0;visibility:hidden}
+#loader .lbox{text-align:center;color:#fff}
+#loader svg{width:110px;margin:0 auto 14px;animation:bob 1s ease-in-out infinite}
+#loader .lt{font-family:"Baloo 2",cursive;font-weight:800;font-size:34px;letter-spacing:.02em}
+#loader .ld{margin-top:10px;font-weight:700;letter-spacing:.4em;font-size:13px;opacity:.9}
+#loader .ld span{display:inline-block;animation:bob .9s ease-in-out infinite}
+#loader .ld span:nth-child(2){animation-delay:.15s}
+#loader .ld span:nth-child(3){animation-delay:.3s}
+
+/* hero tap hint */
+.hero .hint{display:block;margin:-6px 0 12px;font-weight:700;font-size:12px;color:#fff;opacity:.92}
+.hero .hint b{background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px}
+.char svg{animation:heropop .6s cubic-bezier(.2,1.5,.4,1) both}
+.char:nth-child(2) svg{animation-delay:.1s}
+.char:nth-child(3) svg{animation-delay:.2s}
+.char:nth-child(4) svg{animation-delay:.3s}
+
+/* ---------- MENU drawer ---------- */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(78%,300px);z-index:120;background:var(--ivory);
+  box-shadow:-14px 0 40px -18px rgba(90,70,40,.5);transform:translateX(100%);transition:transform .35s cubic-bezier(.3,.8,.3,1);
+  padding:26px 22px;display:flex;flex-direction:column;gap:4px}
+.drawer.open{transform:none}
+.drawer .dh{font-family:"Baloo 2",cursive;font-weight:800;font-size:22px;color:var(--orange);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.drawer .dh button{background:none;border:0;font-size:26px;color:var(--brown);cursor:pointer;line-height:1}
+.drawer a{display:flex;align-items:center;gap:10px;padding:14px 12px;text-decoration:none;color:var(--brown);
+  font-weight:700;border-radius:14px;transition:background .2s,transform .2s}
+.drawer a:hover{background:var(--cream2);transform:translateX(4px)}
+.drawer a svg{width:26px}
+.scrim{position:fixed;inset:0;z-index:110;background:rgba(60,45,25,.42);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.scrim.open{opacity:1;visibility:visible}
+
+/* ---------- floating controls ---------- */
+.fabs{position:fixed;bottom:20px;z-index:90;display:flex;flex-direction:column;gap:12px;
+  right:max(16px,calc((100vw - 600px)/2 + 16px))}
+.fab{width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;
+  font-size:22px;background:#fff;color:var(--brown);box-shadow:var(--shadow);
+  transition:transform .2s,opacity .3s;opacity:0;transform:translateY(16px) scale(.8);pointer-events:none}
+.fab.show{opacity:1;transform:none;pointer-events:auto}
+.fab:hover{transform:translateY(-3px) scale(1.06)}
+.fab.buy{background:var(--orange);color:#fff;width:60px;height:60px;font-size:15px;font-weight:800;line-height:1.1;text-align:center;animation:pulse 2.6s ease-in-out infinite}
+
+/* ---------- squish counter ---------- */
+.counter{position:fixed;bottom:24px;z-index:90;left:max(16px,calc((100vw - 600px)/2 + 16px));
+  background:#fff;border-radius:30px;padding:8px 16px 8px 10px;box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:8px;font-weight:800;color:var(--brown);font-size:14px;
+  opacity:0;transform:translateY(16px);transition:opacity .3s,transform .3s}
+.counter.show{opacity:1;transform:none}
+.counter svg{width:30px;flex:none}
+.counter .n{font-family:"Baloo 2",cursive;color:var(--orange);font-size:19px}
+.counter.bump{animation:jelly .5s ease}
+</style>
+</head>
+<body>
+
+<!-- loader -->
+<div id="loader">
+  <div class="lbox">
+    <svg viewBox="0 0 120 138" style="--fur:#fbf3e5;--line:#d9a24a;--belly:#fff;--pink:#f0b7b7"><use href="#ham"/></svg>
+    <div class="lt baloo">はむにぎり</div>
+    <div class="ld"><span>●</span><span>●</span><span>●</span></div>
+  </div>
+</div>
+
+<!-- reusable SVG mascots -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 虚無顔 void-face (clean) -->
+    <symbol id="hamface" viewBox="0 0 120 116">
+      <ellipse cx="35" cy="30" rx="14" ry="17" fill="#f6ecd8" stroke="#7a5c3a" stroke-width="4.5"/>
+      <ellipse cx="85" cy="30" rx="14" ry="17" fill="#f6ecd8" stroke="#7a5c3a" stroke-width="4.5"/>
+      <ellipse cx="35" cy="31" rx="6.5" ry="9" fill="#eaa9a9"/>
+      <ellipse cx="85" cy="31" rx="6.5" ry="9" fill="#eaa9a9"/>
+      <path d="M60 16C33 16 16 35 16 60c0 8 2 15 6 21 6 8 19 13 38 13s32-5 38-13c4-6 6-13 6-21 0-25-17-44-44-44z" fill="#f6ecd8" stroke="#7a5c3a" stroke-width="4.5"/>
+      <ellipse cx="33" cy="70" rx="8" ry="5" fill="#f2b8b8" opacity=".55"/>
+      <ellipse cx="87" cy="70" rx="8" ry="5" fill="#f2b8b8" opacity=".55"/>
+      <circle cx="46" cy="60" r="5" fill="#5a4028"/>
+      <circle cx="74" cy="60" r="5" fill="#5a4028"/>
+      <ellipse cx="60" cy="70" rx="4" ry="3" fill="#c98b6a"/>
+      <path d="M53 75q3.5 6 7 0 3.5 6 7 0" fill="none" stroke="#5a4028" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- full-body cartoon hamster: uses var(--fur)/var(--belly)/var(--line)/var(--pink) -->
+    <symbol id="ham" viewBox="0 0 120 140">
+      <g class="arm">
+        <ellipse cx="17" cy="88" rx="11" ry="8" fill="var(--fur,#e8c69a)" stroke="var(--line,#8a6a44)" stroke-width="4" transform="rotate(-24 17 88)"/>
+        <ellipse cx="103" cy="88" rx="11" ry="8" fill="var(--fur,#e8c69a)" stroke="var(--line,#8a6a44)" stroke-width="4" transform="rotate(24 103 88)"/>
+      </g>
+      <ellipse cx="41" cy="30" rx="13" ry="15" fill="var(--fur,#e8c69a)" stroke="var(--line,#8a6a44)" stroke-width="4"/>
+      <ellipse cx="79" cy="30" rx="13" ry="15" fill="var(--fur,#e8c69a)" stroke="var(--line,#8a6a44)" stroke-width="4"/>
+      <ellipse cx="41" cy="31" rx="6" ry="8" fill="var(--pink,#e7a7a7)"/>
+      <ellipse cx="79" cy="31" rx="6" ry="8" fill="var(--pink,#e7a7a7)"/>
+      <path d="M60 14C33 14 17 35 17 66c0 14 4 27 12 37 7 9 18 13 31 13s24-4 31-13c8-10 12-23 12-37C103 35 87 14 60 14Z" fill="var(--fur,#e8c69a)" stroke="var(--line,#8a6a44)" stroke-width="4"/>
+      <ellipse cx="60" cy="90" rx="27" ry="30" fill="var(--belly,#fbf5ea)"/>
+      <ellipse cx="33" cy="74" rx="9" ry="6" fill="#f2b8b8" opacity=".5"/>
+      <ellipse cx="87" cy="74" rx="9" ry="6" fill="#f2b8b8" opacity=".5"/>
+      <circle cx="46" cy="64" r="5.2" fill="#5a4028"/>
+      <circle cx="74" cy="64" r="5.2" fill="#5a4028"/>
+      <circle cx="47.8" cy="62" r="1.7" fill="#fff"/>
+      <circle cx="75.8" cy="62" r="1.7" fill="#fff"/>
+      <ellipse cx="60" cy="74" rx="4" ry="3" fill="#c98b6a"/>
+      <path d="M53 79q3.5 6 7 0 3.5 6 7 0" fill="none" stroke="#5a4028" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <ellipse cx="46" cy="110" rx="8" ry="6" fill="var(--pink,#e7a7a7)"/>
+      <ellipse cx="74" cy="110" rx="8" ry="6" fill="var(--pink,#e7a7a7)"/>
+      <ellipse cx="43" cy="126" rx="10" ry="7" fill="var(--pink,#e7a7a7)"/>
+      <ellipse cx="77" cy="126" rx="10" ry="7" fill="var(--pink,#e7a7a7)"/>
+    </symbol>
+    <!-- emoji faces -->
+    <symbol id="e-doki" viewBox="0 0 100 100">
+      <path d="M22 44c0-14 8-24 28-24s28 10 28 24-10 30-28 30S22 58 22 44z" fill="#e7c69b" stroke="#4a3d2c" stroke-width="4"/>
+      <path d="M30 20l-6-10M70 20l6-10" stroke="#4a3d2c" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="40" cy="46" r="3" fill="#4a3d2c"/><circle cx="60" cy="46" r="3" fill="#4a3d2c"/>
+      <path d="M44 58h12" stroke="#4a3d2c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M18 40l-6-3M20 50l-7 1M82 40l6-3M80 50l7 1" stroke="#c98b6a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M50 78c-8-9-20-4-20 5s12 12 20 4c8 8 20 5 20-4s-12-14-20-5z" fill="#e46d6d"/>
+    </symbol>
+    <symbol id="e-tea" viewBox="0 0 100 100">
+      <path d="M22 44c0-14 8-24 28-24s28 10 28 24-10 30-28 30S22 58 22 44z" fill="#e7c69b" stroke="#4a3d2c" stroke-width="4"/>
+      <path d="M30 20l-6-10M70 20l6-10" stroke="#4a3d2c" stroke-width="4" stroke-linecap="round"/>
+      <path d="M36 46c2 2.4 6 2.4 8 0M56 46c2 2.4 6 2.4 8 0" fill="none" stroke="#4a3d2c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M45 60c2 2 8 2 10 0" fill="none" stroke="#4a3d2c" stroke-width="3" stroke-linecap="round"/>
+      <rect x="60" y="66" width="20" height="15" rx="3" fill="#fff" stroke="#4a3d2c" stroke-width="3"/>
+      <path d="M80 70c6 0 6 8 0 8" fill="none" stroke="#4a3d2c" stroke-width="3"/>
+      <path d="M66 60c0 4 8 4 8 0" stroke="#d7c07a" stroke-width="3" fill="none"/>
+    </symbol>
+    <symbol id="e-love" viewBox="0 0 100 100">
+      <path d="M22 44c0-14 8-24 28-24s28 10 28 24-10 30-28 30S22 58 22 44z" fill="#e7c69b" stroke="#4a3d2c" stroke-width="4"/>
+      <path d="M30 20l-6-10M70 20l6-10" stroke="#4a3d2c" stroke-width="4" stroke-linecap="round"/>
+      <path d="M40 44c-5-6-13-2-13 4s8 9 13 3c5 6 13 3 13-3s-8-10-13-4z" fill="#e46d6d"/>
+      <path d="M73 44c-5-6-13-2-13 4s8 9 13 3c5 6 13 3 13-3s-8-10-13-4z" fill="#e46d6d" transform="translate(-13 0)"/>
+      <path d="M44 60c2 2 8 2 10 0" fill="none" stroke="#4a3d2c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M12 30l6 4-6 4M88 30l-6 4 6 4" stroke="#e46d6d" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="side-deco left">
+  <svg style="top:16%;left:20%;--fur:#e8c69a;--line:#8a6a44"><use href="#ham"/></svg>
+  <svg style="top:52%;left:35%;--fur:#b8b3ad;--line:#7d7870"><use href="#ham"/></svg>
+</div>
+<div class="side-deco right">
+  <svg style="top:30%;right:20%;--fur:#cba06a;--line:#7a5c3a"><use href="#ham"/></svg>
+  <svg style="top:66%;right:34%;--fur:#f2ece1;--line:#b6ab97;--belly:#fff"><use href="#ham"/></svg>
+</div>
+
+<div class="wrap">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#top"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-4v-6h-4v6H6v-9H3z"/></svg>HOME</a>
+    <a href="#shop"><svg class="ic" viewBox="0 0 24 24"><path d="M7 4h-4v2h3l3 9h9l3-7H8m1 12a2 2 0 100 4 2 2 0 000-4m8 0a2 2 0 100 4 2 2 0 000-4"/></svg>CART</a>
+    <a href="#" id="menutrig"><svg class="ic" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>MENU</a>
+  </nav>
+  <div class="nav-prog" id="prog"></div>
+
+  <!-- MENU drawer -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="dh"><span class="baloo">MENU</span><button id="drawerClose" aria-label="閉じる">×</button></div>
+    <a href="#top"><svg viewBox="0 0 120 138" style="--fur:#e8c9a0;--line:#a98a5c"><use href="#ham"/></svg>もっちり はむにぎり</a>
+    <a href="#relax"><svg viewBox="0 0 120 138" style="--fur:#c99a63;--line:#7a5c3a"><use href="#ham"/></svg>ハムの力でリラックス！</a>
+    <a href="#point"><svg viewBox="0 0 120 138" style="--fur:#b7b2ac;--line:#7d7870"><use href="#ham"/></svg>POINT 01–08</a>
+    <a href="#omoi"><svg viewBox="0 0 120 138" style="--fur:#f4eee2;--line:#c3b9a4;--belly:#fff"><use href="#ham"/></svg>込めた思い</a>
+    <a href="#gallery"><svg viewBox="0 0 120 138" style="--fur:#e79a3c;--line:#b06f1e"><use href="#ham"/></svg>ギャラリー</a>
+    <a href="#footer"><svg viewBox="0 0 100 96"><use href="#hamface"/></svg>ONLINE SHOP</a>
+  </aside>
+
+  <span id="top"></span>
+
+  <!-- ONLINE SHOP BAR -->
+  <div class="shopbar" id="shop">
+    <span class="os baloo">ONLINE SHOP</span>
+    <a class="cta" href="#footer">はむにぎりの購入は<br>こちらをクリック</a>
+    <svg class="peek" viewBox="0 0 120 138" style="--fur:#b8b3ad;--line:#7d7870"><use href="#ham"/></svg>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="mocchiri">もっちり</span>
+    <h1 class="baloo">はむにぎり</h1>
+    <p class="sub">握って癒される虚無顔ハムスター</p>
+    <svg class="face"><use href="#hamface"/></svg>
+    <span class="hint">👆 <b>タップしてにぎにぎ</b></span>
+    <ul class="chars" style="list-style:none">
+      <li class="char"><div class="imw"><svg viewBox="0 0 120 138" style="--fur:#f4eee2;--line:#c3b9a4;--belly:#fff"><use href="#ham"/></svg></div><span class="nm">おもち</span></li>
+      <li class="char"><div class="imw"><svg viewBox="0 0 120 138" style="--fur:#e8c9a0;--line:#a98a5c"><use href="#ham"/></svg></div><span class="nm">きなこ</span></li>
+      <li class="char"><div class="imw"><svg viewBox="0 0 120 138" style="--fur:#c99a63;--line:#7a5c3a"><use href="#ham"/></svg></div><span class="nm">みたらし</span></li>
+      <li class="char"><div class="imw"><svg viewBox="0 0 120 138" style="--fur:#b7b2ac;--line:#7d7870"><use href="#ham"/></svg></div><span class="nm">ごまきち</span></li>
+    </ul>
+    <div class="row-photo"><img src="assets/hero_row.jpg" alt="おもち・きなこ・みたらし・ごまきち 4色のはむにぎり" loading="lazy"></div>
+  </header>
+
+  <!-- RELAX -->
+  <section class="relax" id="relax">
+    <h2 class="h2 reveal">ハムの力で<span class="accent">リラックス！</span></h2>
+    <div class="bubble reveal">握るのに丁度いいサイズ感。<br>握ることで筋肉の緊張が<br>ゆるんでリラックスができる。</div>
+    <div class="bubble reveal">伸縮性のあるモチモチ、<br>ふわふわ生地でまるで本物の動物みたい。<br>柔らかい感触は安心感と癒しもお届け！</div>
+    <div class="withcat reveal">
+      <div class="bubble b3">本物のようなハムスター！<br>可愛らしい見た目で心がなごむ。</div>
+      <svg viewBox="0 0 120 138" style="--fur:#e8c9a0;--line:#a98a5c"><use href="#ham"/></svg>
+    </div>
+    <ul class="cases reveal" style="list-style:none">
+      <li class="case"><div class="emoji"><svg viewBox="0 0 100 100"><use href="#e-doki"/></svg></div><p>緊張をほぐす為の<br>お守り代わりに！</p></li>
+      <li class="case"><div class="emoji"><svg viewBox="0 0 100 100"><use href="#e-tea"/></svg></div><p>仕事や勉強中の<br>一息つきたいとき</p></li>
+      <li class="case"><div class="emoji"><svg viewBox="0 0 100 100"><use href="#e-love"/></svg></div><p>ハムスターが<br>大好きなひとに</p></li>
+    </ul>
+    <p class="tagline reveal">握って癒されよう♪</p>
+    <div class="hands reveal"><img src="assets/hands4.jpg" alt="手のひらで握られたはむにぎりたち" loading="lazy"></div>
+  </section>
+
+  <!-- POINT -->
+  <section class="point" id="point">
+    <div class="point-title baloo reveal">POINT</div>
+
+    <div class="pt reveal">
+      <div class="no baloo">01</div>
+      <div class="ttl">ぬい撮りにも最適</div>
+      <div class="float-in">
+        <img class="floatimg" src="assets/gray_glass.jpg" alt="メガネをかけたはむにぎり">
+        <span class="onoma" style="right:8%;top:6%">パシャ☆</span>
+        <span class="onoma" style="left:6%;bottom:18%">パシャ☆</span>
+      </div>
+      <div class="photo-card"><img src="assets/strip3.jpg" alt="ぬい撮り作例3点" loading="lazy"></div>
+    </div>
+
+    <div class="pt reveal">
+      <div class="no baloo">02</div>
+      <div class="ttl">持ち運びにも<br>丁度いいサイズ感</div>
+      <div class="photo-card"><img src="assets/tote_woman.jpg" alt="トートバッグで一緒におでかけ" loading="lazy"></div>
+    </div>
+
+    <div class="pt reveal">
+      <div class="no baloo">03</div>
+      <div class="ttl">後ろ姿だけでもかわいい</div>
+      <div class="float-in">
+        <span class="onoma" style="left:8%;top:14%">ぎゅ〜</span>
+        <img class="floatimg" src="assets/jar_butt.jpg" alt="瓶に入った後ろ姿">
+        <span class="onoma" style="right:10%;bottom:10%">ぎゅ〜</span>
+      </div>
+      <div class="photo-card" style="margin-top:12px"><img src="assets/strip2_bk.jpg" alt="本棚・スリッパでくつろぐ後ろ姿" loading="lazy"></div>
+    </div>
+
+    <div class="pt reveal">
+      <div class="no baloo">04</div>
+      <div class="ttl">集めたくなる色合い</div>
+      <div class="float-in">
+        <span class="onoma" style="left:4%;top:20%">しゅ〜ごー</span>
+        <img class="floatimg" style="width:78%" src="assets/group04.jpg" alt="4色のはむにぎり集合">
+        <span class="onoma" style="right:2%;top:6%">ぴー！</span>
+      </div>
+      <ul class="toon-row">
+        <li><svg viewBox="0 0 120 138" style="--fur:#e8c9a0;--line:#a98a5c"><use href="#ham"/></svg></li>
+        <li><svg viewBox="0 0 120 138" style="--fur:#e79a3c;--line:#b06f1e"><use href="#ham"/></svg></li>
+        <li><svg viewBox="0 0 120 138" style="--fur:#b7b2ac;--line:#7d7870"><use href="#ham"/></svg></li>
+        <li><svg viewBox="0 0 120 138" style="--fur:#f4eee2;--line:#c3b9a4;--belly:#fff"><use href="#ham"/></svg></li>
+      </ul>
+      <div class="photo-card"><img src="assets/strip2_sug.jpg" alt="暮らしの中のはむにぎり" loading="lazy"></div>
+    </div>
+
+    <div class="pt reveal" style="margin-bottom:0">
+      <div class="green-block"><img src="assets/green4.jpg" alt="05もちもちの伸びる生地・06おとぼけ顔のネーム・07目の周りの毛を切ってもかわいい・08生きているみたいなほのかな重み" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- OMOI -->
+  <section class="omoi" id="omoi">
+    <div style="text-align:center"><h2 class="h2 reveal">はむにぎりに込めた思い</h2></div>
+    <p class="reveal">はむにぎりは、<br>ハムスターを飼ってみたいけれど、<br>命を預かることへの責任や不安から、<br>なかなか一歩を踏み出せない。</p>
+    <p class="reveal">ずっとそばにいてくれる、<br>本物のハムスターのような存在がいたら<span class="dash">──</span>。</p>
+    <p class="reveal">そんな気持ちから誕生しました。</p>
+    <p class="reveal">小さな体をそっとにぎると、<br>ぬくもりを感じるような安心感に包まれる。<br>忙しい毎日の中でも、<br>ふと心がやわらぐようなぬいぐるみです。</p>
+    <p class="reveal">かつて一緒に過ごしていた方へ。<br>いま大切に育てている方へ。<br>そして、いつか飼ってみたいと願う方へ。</p>
+    <p class="reveal">はむにぎりが、そっと寄り添う、<br>やさしい癒しの存在になりますように。</p>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <h2 class="h2 reveal">自分だけの<span class="accent">可愛さ</span>を見つけよう！</h2>
+    <div class="grid-photo reveal"><img src="assets/grid4.jpg" alt="はむにぎりのある暮らしギャラリー" loading="lazy"></div>
+    <div class="thankwrap reveal">
+      <div class="thankyou baloo">THANK YOU!</div>
+      <img src="assets/thankyou.jpg" alt="メガネのはむにぎり">
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <a class="fcta" href="https://livheart.jp/" target="_blank" rel="noopener">🛒 ONLINE SHOP で購入する</a>
+    <div style="font-weight:900;font-size:22px" class="baloo">もっちり はむにぎり</div>
+    <small>握って癒される虚無顔ハムスター<br>おもち ／ きなこ ／ みたらし ／ ごまきち</small>
+    <small style="margin-top:14px">© LIV HEART Inc. 商品画像・キャッチコピーは公式サイトより。<br>本ページはファンによる特設サイトのデモです。</small>
+  </footer>
+
+</div>
+
+<!-- floating controls -->
+<div class="counter" id="counter" title="にぎにぎした回数">
+  <svg viewBox="0 0 100 96"><use href="#hamface"/></svg>
+  <span>にぎにぎ <span class="n" id="cnum">0</span> 回</span>
+</div>
+<div class="fabs">
+  <button class="fab sound" id="soundBtn" title="効果音のオン／オフ" aria-label="効果音">🔊</button>
+  <a class="fab buy" id="buyFab" href="#footer" aria-label="購入へ">🛒<br>購入</a>
+  <button class="fab top" id="topFab" title="トップへ戻る" aria-label="トップへ戻る">↑</button>
+</div>
+
+<script>
+// ---------- loader ----------
+addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('gone'),650);
+});
+
+// ---------- scroll reveal ----------
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*80)+'ms';io.observe(el)});
+
+// ---------- nav progress + floating buttons ----------
+const prog=document.getElementById('prog');
+const topFab=document.getElementById('topFab'), buyFab=document.getElementById('buyFab'), soundFab=document.getElementById('soundBtn');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  prog.style.width=p+'%';
+  const past=scrollY>500;
+  topFab.classList.toggle('show',past);
+  buyFab.classList.toggle('show',past);
+  soundFab.classList.toggle('show',past);
+},{passive:true});
+topFab.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+// ---------- sound engine (WebAudio, no assets) ----------
+let AC=null, soundOn=localStorage.getItem('hn_sound')!=='off';
+const soundBtn=document.getElementById('soundBtn');
+const setSoundIcon=()=>soundBtn.textContent=soundOn?'🔊':'🔇';
+setSoundIcon();
+soundBtn.addEventListener('click',()=>{soundOn=!soundOn;localStorage.setItem('hn_sound',soundOn?'on':'off');setSoundIcon();if(soundOn)poyon();});
+function ctx(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC;}
+function poyon(){ // soft "ぷにっ" squish
+  if(!soundOn)return; const a=ctx(),t=a.currentTime;
+  const o=a.createOscillator(),g=a.createGain();
+  o.type='sine'; o.frequency.setValueAtTime(560,t); o.frequency.exponentialRampToValueAtTime(210,t+.16);
+  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.32,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+.22);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t+.24);
+}
+function pop(){ // light heart pop
+  if(!soundOn)return; const a=ctx(),t=a.currentTime;
+  const o=a.createOscillator(),g=a.createGain();
+  o.type='triangle'; o.frequency.setValueAtTime(880,t); o.frequency.exponentialRampToValueAtTime(1500,t+.08);
+  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.14,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+.12);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t+.14);
+}
+
+// ---------- squish counter ----------
+const counter=document.getElementById('counter'), cnum=document.getElementById('cnum');
+let count=parseInt(localStorage.getItem('hn_count')||'0',10); cnum.textContent=count;
+function bump(){count++;cnum.textContent=count;localStorage.setItem('hn_count',count);
+  counter.classList.add('show');
+  counter.classList.remove('bump');void counter.offsetWidth;counter.classList.add('bump');}
+
+// ---------- tap a hero character -> squish + sound + hearts + count ----------
+document.querySelectorAll('.char').forEach(c=>{
+  c.addEventListener('click',()=>{
+    c.classList.remove('squish');void c.offsetWidth;c.classList.add('squish');
+    poyon(); bump();
+    const r=c.getBoundingClientRect();
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span');
+      s.className='heart';s.textContent=['💗','🧡','💛','🤍'][i%4];
+      s.style.left=(r.left+r.width/2+(Math.random()*40-20))+'px';
+      s.style.top=(r.top+10)+'px';
+      s.style.animationDelay=(i*60)+'ms';
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),1100);
+    }
+    setTimeout(pop,120);
+  });
+});
+
+// ---------- MENU drawer ----------
+const drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim');
+const openD=()=>{drawer.classList.add('open');scrim.classList.add('open');drawer.setAttribute('aria-hidden','false');};
+const closeD=()=>{drawer.classList.remove('open');scrim.classList.remove('open');drawer.setAttribute('aria-hidden','true');};
+document.getElementById('menutrig').addEventListener('click',e=>{e.preventDefault();openD();});
+document.getElementById('drawerClose').addEventListener('click',closeD);
+scrim.addEventListener('click',closeD);
+drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeD));
+addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
+
+// ---------- light parallax on side mascots ----------
+const decos=document.querySelectorAll('.side-deco svg');
+addEventListener('scroll',()=>{
+  const y=scrollY;
+  decos.forEach((d,i)=>{d.style.transform=`translateY(${y*(i%2?-.05:.05)}px)`});
+},{passive:true});
+</script>
+</body>
+</html>
