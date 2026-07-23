@@ -226,7 +226,6 @@ section{padding:44px 22px;position:relative}
 .fab.show{opacity:1;transform:none;pointer-events:auto}
 .fab:hover{transform:translateY(-3px) scale(1.06)}
 .fab.buy{background:var(--orange);color:#fff;width:60px;height:60px;font-size:15px;font-weight:800;line-height:1.1;text-align:center;animation:pulse 2.6s ease-in-out infinite}
-.fab.sound{opacity:1;transform:none;pointer-events:auto}
 
 /* ---------- squish counter ---------- */
 .counter{position:fixed;bottom:24px;z-index:90;left:max(16px,calc((100vw - 600px)/2 + 16px));
@@ -485,7 +484,6 @@ section{padding:44px 22px;position:relative}
 // ---------- loader ----------
 addEventListener('load',()=>{
   setTimeout(()=>document.getElementById('loader').classList.add('gone'),650);
-  setTimeout(()=>{counter.classList.add('show')},1100);
 });
 
 // ---------- scroll reveal ----------
@@ -496,7 +494,7 @@ document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(
 
 // ---------- nav progress + floating buttons ----------
 const prog=document.getElementById('prog');
-const topFab=document.getElementById('topFab'), buyFab=document.getElementById('buyFab');
+const topFab=document.getElementById('topFab'), buyFab=document.getElementById('buyFab'), soundFab=document.getElementById('soundBtn');
 addEventListener('scroll',()=>{
   const h=document.documentElement;
   const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
@@ -504,6 +502,7 @@ addEventListener('scroll',()=>{
   const past=scrollY>500;
   topFab.classList.toggle('show',past);
   buyFab.classList.toggle('show',past);
+  soundFab.classList.toggle('show',past);
 },{passive:true});
 topFab.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 
@@ -533,6 +532,7 @@ function pop(){ // light heart pop
 const counter=document.getElementById('counter'), cnum=document.getElementById('cnum');
 let count=parseInt(localStorage.getItem('hn_count')||'0',10); cnum.textContent=count;
 function bump(){count++;cnum.textContent=count;localStorage.setItem('hn_count',count);
+  counter.classList.add('show');
   counter.classList.remove('bump');void counter.offsetWidth;counter.classList.add('bump');}
 
 // ---------- tap a hero character -> squish + sound + hearts + count ----------
