@@ -180,10 +180,75 @@ section{padding:44px 22px;position:relative}
 @keyframes jelly{0%,100%{transform:scale(1,1)}25%{transform:scale(1.04,.96)}50%{transform:scale(.98,1.02)}75%{transform:scale(1.02,.98)}}
 @keyframes wavehand{0%,100%{transform:rotate(0)}50%{transform:rotate(-22deg)}}
 @keyframes heartup{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-90px) scale(1.3)}}
+@keyframes heropop{0%{transform:translateY(20px) scale(.6);opacity:0}60%{transform:translateY(-6px) scale(1.08)}100%{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* ---------- loader ---------- */
+#loader{position:fixed;inset:0;z-index:200;background:var(--orange);display:grid;place-items:center;
+  transition:opacity .6s .2s,visibility .6s .2s}
+#loader.gone{opacity:0;visibility:hidden}
+#loader .lbox{text-align:center;color:#fff}
+#loader svg{width:110px;margin:0 auto 14px;animation:bob 1s ease-in-out infinite}
+#loader .lt{font-family:"Baloo 2",cursive;font-weight:800;font-size:34px;letter-spacing:.02em}
+#loader .ld{margin-top:10px;font-weight:700;letter-spacing:.4em;font-size:13px;opacity:.9}
+#loader .ld span{display:inline-block;animation:bob .9s ease-in-out infinite}
+#loader .ld span:nth-child(2){animation-delay:.15s}
+#loader .ld span:nth-child(3){animation-delay:.3s}
+
+/* hero tap hint */
+.hero .hint{display:block;margin:-6px 0 12px;font-weight:700;font-size:12px;color:#fff;opacity:.92}
+.hero .hint b{background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px}
+.char svg{animation:heropop .6s cubic-bezier(.2,1.5,.4,1) both}
+.char:nth-child(2) svg{animation-delay:.1s}
+.char:nth-child(3) svg{animation-delay:.2s}
+.char:nth-child(4) svg{animation-delay:.3s}
+
+/* ---------- MENU drawer ---------- */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(78%,300px);z-index:120;background:var(--ivory);
+  box-shadow:-14px 0 40px -18px rgba(90,70,40,.5);transform:translateX(100%);transition:transform .35s cubic-bezier(.3,.8,.3,1);
+  padding:26px 22px;display:flex;flex-direction:column;gap:4px}
+.drawer.open{transform:none}
+.drawer .dh{font-family:"Baloo 2",cursive;font-weight:800;font-size:22px;color:var(--orange);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.drawer .dh button{background:none;border:0;font-size:26px;color:var(--brown);cursor:pointer;line-height:1}
+.drawer a{display:flex;align-items:center;gap:10px;padding:14px 12px;text-decoration:none;color:var(--brown);
+  font-weight:700;border-radius:14px;transition:background .2s,transform .2s}
+.drawer a:hover{background:var(--cream2);transform:translateX(4px)}
+.drawer a svg{width:26px}
+.scrim{position:fixed;inset:0;z-index:110;background:rgba(60,45,25,.42);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.scrim.open{opacity:1;visibility:visible}
+
+/* ---------- floating controls ---------- */
+.fabs{position:fixed;bottom:20px;z-index:90;display:flex;flex-direction:column;gap:12px;
+  right:max(16px,calc((100vw - 600px)/2 + 16px))}
+.fab{width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;
+  font-size:22px;background:#fff;color:var(--brown);box-shadow:var(--shadow);
+  transition:transform .2s,opacity .3s;opacity:0;transform:translateY(16px) scale(.8);pointer-events:none}
+.fab.show{opacity:1;transform:none;pointer-events:auto}
+.fab:hover{transform:translateY(-3px) scale(1.06)}
+.fab.buy{background:var(--orange);color:#fff;width:60px;height:60px;font-size:15px;font-weight:800;line-height:1.1;text-align:center;animation:pulse 2.6s ease-in-out infinite}
+.fab.sound{opacity:1;transform:none;pointer-events:auto}
+
+/* ---------- squish counter ---------- */
+.counter{position:fixed;bottom:24px;z-index:90;left:max(16px,calc((100vw - 600px)/2 + 16px));
+  background:#fff;border-radius:30px;padding:8px 16px 8px 10px;box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:8px;font-weight:800;color:var(--brown);font-size:14px;
+  opacity:0;transform:translateY(16px);transition:opacity .3s,transform .3s}
+.counter.show{opacity:1;transform:none}
+.counter svg{width:30px;flex:none}
+.counter .n{font-family:"Baloo 2",cursive;color:var(--orange);font-size:19px}
+.counter.bump{animation:jelly .5s ease}
 </style>
 </head>
 <body>
+
+<!-- loader -->
+<div id="loader">
+  <div class="lbox">
+    <svg viewBox="0 0 120 138" style="--fur:#fbf3e5;--line:#d9a24a;--belly:#fff;--pink:#f0b7b7"><use href="#ham"/></svg>
+    <div class="lt baloo">はむにぎり</div>
+    <div class="ld"><span>●</span><span>●</span><span>●</span></div>
+  </div>
+</div>
 
 <!-- reusable SVG mascots -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -261,9 +326,21 @@ section{padding:44px 22px;position:relative}
   <nav class="nav">
     <a href="#top"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-4v-6h-4v6H6v-9H3z"/></svg>HOME</a>
     <a href="#shop"><svg class="ic" viewBox="0 0 24 24"><path d="M7 4h-4v2h3l3 9h9l3-7H8m1 12a2 2 0 100 4 2 2 0 000-4m8 0a2 2 0 100 4 2 2 0 000-4"/></svg>CART</a>
-    <a href="#top"><svg class="ic" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>MENU</a>
+    <a href="#" id="menutrig"><svg class="ic" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>MENU</a>
   </nav>
   <div class="nav-prog" id="prog"></div>
+
+  <!-- MENU drawer -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="dh"><span class="baloo">MENU</span><button id="drawerClose" aria-label="閉じる">×</button></div>
+    <a href="#top"><svg viewBox="0 0 120 138" style="--fur:#e8c9a0;--line:#a98a5c"><use href="#ham"/></svg>もっちり はむにぎり</a>
+    <a href="#relax"><svg viewBox="0 0 120 138" style="--fur:#c99a63;--line:#7a5c3a"><use href="#ham"/></svg>ハムの力でリラックス！</a>
+    <a href="#point"><svg viewBox="0 0 120 138" style="--fur:#b7b2ac;--line:#7d7870"><use href="#ham"/></svg>POINT 01–08</a>
+    <a href="#omoi"><svg viewBox="0 0 120 138" style="--fur:#f4eee2;--line:#c3b9a4;--belly:#fff"><use href="#ham"/></svg>込めた思い</a>
+    <a href="#gallery"><svg viewBox="0 0 120 138" style="--fur:#e79a3c;--line:#b06f1e"><use href="#ham"/></svg>ギャラリー</a>
+    <a href="#footer"><svg viewBox="0 0 100 96"><use href="#hamface"/></svg>ONLINE SHOP</a>
+  </aside>
 
   <span id="top"></span>
 
@@ -280,6 +357,7 @@ section{padding:44px 22px;position:relative}
     <h1 class="baloo">はむにぎり</h1>
     <p class="sub">握って癒される虚無顔ハムスター</p>
     <svg class="face"><use href="#hamface"/></svg>
+    <span class="hint">👆 <b>タップしてにぎにぎ</b></span>
     <ul class="chars" style="list-style:none">
       <li class="char"><div class="imw"><svg viewBox="0 0 120 138" style="--fur:#f4eee2;--line:#c3b9a4;--belly:#fff"><use href="#ham"/></svg></div><span class="nm">おもち</span></li>
       <li class="char"><div class="imw"><svg viewBox="0 0 120 138" style="--fur:#e8c9a0;--line:#a98a5c"><use href="#ham"/></svg></div><span class="nm">きなこ</span></li>
@@ -290,7 +368,7 @@ section{padding:44px 22px;position:relative}
   </header>
 
   <!-- RELAX -->
-  <section class="relax">
+  <section class="relax" id="relax">
     <h2 class="h2 reveal">ハムの力で<span class="accent">リラックス！</span></h2>
     <div class="bubble reveal">握るのに丁度いいサイズ感。<br>握ることで筋肉の緊張が<br>ゆるんでリラックスができる。</div>
     <div class="bubble reveal">伸縮性のあるモチモチ、<br>ふわふわ生地でまるで本物の動物みたい。<br>柔らかい感触は安心感と癒しもお届け！</div>
@@ -308,7 +386,7 @@ section{padding:44px 22px;position:relative}
   </section>
 
   <!-- POINT -->
-  <section class="point">
+  <section class="point" id="point">
     <div class="point-title baloo reveal">POINT</div>
 
     <div class="pt reveal">
@@ -362,7 +440,7 @@ section{padding:44px 22px;position:relative}
   </section>
 
   <!-- OMOI -->
-  <section class="omoi">
+  <section class="omoi" id="omoi">
     <div style="text-align:center"><h2 class="h2 reveal">はむにぎりに込めた思い</h2></div>
     <p class="reveal">はむにぎりは、<br>ハムスターを飼ってみたいけれど、<br>命を預かることへの責任や不安から、<br>なかなか一歩を踏み出せない。</p>
     <p class="reveal">ずっとそばにいてくれる、<br>本物のハムスターのような存在がいたら<span class="dash">──</span>。</p>
@@ -373,7 +451,7 @@ section{padding:44px 22px;position:relative}
   </section>
 
   <!-- GALLERY -->
-  <section class="gallery">
+  <section class="gallery" id="gallery">
     <h2 class="h2 reveal">自分だけの<span class="accent">可愛さ</span>を見つけよう！</h2>
     <div class="grid-photo reveal"><img src="assets/grid4.jpg" alt="はむにぎりのある暮らしギャラリー" loading="lazy"></div>
     <div class="thankwrap reveal">
@@ -392,25 +470,76 @@ section{padding:44px 22px;position:relative}
 
 </div>
 
+<!-- floating controls -->
+<div class="counter" id="counter" title="にぎにぎした回数">
+  <svg viewBox="0 0 100 96"><use href="#hamface"/></svg>
+  <span>にぎにぎ <span class="n" id="cnum">0</span> 回</span>
+</div>
+<div class="fabs">
+  <button class="fab sound" id="soundBtn" title="効果音のオン／オフ" aria-label="効果音">🔊</button>
+  <a class="fab buy" id="buyFab" href="#footer" aria-label="購入へ">🛒<br>購入</a>
+  <button class="fab top" id="topFab" title="トップへ戻る" aria-label="トップへ戻る">↑</button>
+</div>
+
 <script>
-// scroll reveal
+// ---------- loader ----------
+addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('gone'),650);
+  setTimeout(()=>{counter.classList.add('show')},1100);
+});
+
+// ---------- scroll reveal ----------
 const io=new IntersectionObserver((es)=>{
   es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
-},{threshold:.15});
+},{threshold:.12});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*80)+'ms';io.observe(el)});
 
-// nav progress
+// ---------- nav progress + floating buttons ----------
 const prog=document.getElementById('prog');
+const topFab=document.getElementById('topFab'), buyFab=document.getElementById('buyFab');
 addEventListener('scroll',()=>{
   const h=document.documentElement;
   const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
   prog.style.width=p+'%';
+  const past=scrollY>500;
+  topFab.classList.toggle('show',past);
+  buyFab.classList.toggle('show',past);
 },{passive:true});
+topFab.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 
-// click a hero character -> squish + heart burst
+// ---------- sound engine (WebAudio, no assets) ----------
+let AC=null, soundOn=localStorage.getItem('hn_sound')!=='off';
+const soundBtn=document.getElementById('soundBtn');
+const setSoundIcon=()=>soundBtn.textContent=soundOn?'🔊':'🔇';
+setSoundIcon();
+soundBtn.addEventListener('click',()=>{soundOn=!soundOn;localStorage.setItem('hn_sound',soundOn?'on':'off');setSoundIcon();if(soundOn)poyon();});
+function ctx(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC;}
+function poyon(){ // soft "ぷにっ" squish
+  if(!soundOn)return; const a=ctx(),t=a.currentTime;
+  const o=a.createOscillator(),g=a.createGain();
+  o.type='sine'; o.frequency.setValueAtTime(560,t); o.frequency.exponentialRampToValueAtTime(210,t+.16);
+  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.32,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+.22);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t+.24);
+}
+function pop(){ // light heart pop
+  if(!soundOn)return; const a=ctx(),t=a.currentTime;
+  const o=a.createOscillator(),g=a.createGain();
+  o.type='triangle'; o.frequency.setValueAtTime(880,t); o.frequency.exponentialRampToValueAtTime(1500,t+.08);
+  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.14,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+.12);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t+.14);
+}
+
+// ---------- squish counter ----------
+const counter=document.getElementById('counter'), cnum=document.getElementById('cnum');
+let count=parseInt(localStorage.getItem('hn_count')||'0',10); cnum.textContent=count;
+function bump(){count++;cnum.textContent=count;localStorage.setItem('hn_count',count);
+  counter.classList.remove('bump');void counter.offsetWidth;counter.classList.add('bump');}
+
+// ---------- tap a hero character -> squish + sound + hearts + count ----------
 document.querySelectorAll('.char').forEach(c=>{
   c.addEventListener('click',()=>{
     c.classList.remove('squish');void c.offsetWidth;c.classList.add('squish');
+    poyon(); bump();
     const r=c.getBoundingClientRect();
     for(let i=0;i<5;i++){
       const s=document.createElement('span');
@@ -421,10 +550,21 @@ document.querySelectorAll('.char').forEach(c=>{
       document.body.appendChild(s);
       setTimeout(()=>s.remove(),1100);
     }
+    setTimeout(pop,120);
   });
 });
 
-// light parallax on side mascots
+// ---------- MENU drawer ----------
+const drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim');
+const openD=()=>{drawer.classList.add('open');scrim.classList.add('open');drawer.setAttribute('aria-hidden','false');};
+const closeD=()=>{drawer.classList.remove('open');scrim.classList.remove('open');drawer.setAttribute('aria-hidden','true');};
+document.getElementById('menutrig').addEventListener('click',e=>{e.preventDefault();openD();});
+document.getElementById('drawerClose').addEventListener('click',closeD);
+scrim.addEventListener('click',closeD);
+drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeD));
+addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
+
+// ---------- light parallax on side mascots ----------
 const decos=document.querySelectorAll('.side-deco svg');
 addEventListener('scroll',()=>{
   const y=scrollY;
