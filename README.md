@@ -64,3 +64,12 @@ lib/
 ---
 
 *Made slowly, with care.*
+
+## 単一ファイル版 / Standalone shareable version
+
+`standalone/index.html` は、サイト全体を **1つの自己完結した HTML ファイル**に作り直したものです
+（外部依存なし・端末標準フォント使用・スマホ最適化）。ダブルクリックで開くだけで動き、
+どんな静的ホスティングにも置けます。スマホで共有したいときに便利です。
+
+A single self-contained HTML file that reproduces the whole site — no build, no
+external requests, mobile-first. Open it directly or drop it on any static host.
