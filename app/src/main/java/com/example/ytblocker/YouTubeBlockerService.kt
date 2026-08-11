@@ -47,9 +47,9 @@ class YouTubeBlockerService : AccessibilityService() {
         if (pkg !in browserPackages) return
 
         val url = extractUrl()
-        val isYouTube = url != null && isYouTubeUrl(url)
+        val isBlockedSite = url != null && isBlockedUrl(url)
 
-        if (isYouTube && ScheduleRepository.isBlockedNow(this)) {
+        if (isBlockedSite && ScheduleRepository.isBlockedNow(this)) {
             showOverlay()
         } else {
             removeOverlay()
@@ -63,11 +63,34 @@ class YouTubeBlockerService : AccessibilityService() {
         return super.onUnbind(intent)
     }
 
-    private fun isYouTubeUrl(url: String): Boolean {
-        val u = url.lowercase().trim()
-        // The address bar usually shows just the host (e.g. "youtube.com" or "m.youtube.com"),
-        // but can also show the full URL while typing/loading.
-        return u.contains("youtube.com") || u.contains("youtu.be")
+    // Domains to block. Matching is done on the URL host, so "x.com" blocks x.com only and
+    // NOT sites that merely contain that text (e.g. netflix.com).
+    private val blockedDomains = setOf(
+        "youtube.com",
+        "youtu.be",
+        "instagram.com",
+        "instagr.am",
+        "twitter.com",
+        "x.com"
+    )
+
+    private fun isBlockedUrl(url: String): Boolean {
+        val host = hostOf(url)
+        return blockedDomains.any { host == it || host.endsWith(".$it") }
+    }
+
+    /**
+     * Extracts the host from whatever the address bar shows. The bar usually shows just the host
+     * (e.g. "youtube.com", "m.youtube.com") but can also show a full URL while loading, or a
+     * search phrase while typing.
+     */
+    private fun hostOf(raw: String): String {
+        var s = raw.trim().lowercase()
+        val scheme = s.indexOf("://")
+        if (scheme >= 0) s = s.substring(scheme + 3)
+        // Keep only the host portion: drop path, query, and any trailing text after a space.
+        s = s.substringBefore(' ').substringBefore('/').substringBefore('?')
+        return s
     }
 
     private fun extractUrl(): String? {
