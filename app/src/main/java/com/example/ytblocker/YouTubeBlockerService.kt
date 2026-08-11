@@ -63,20 +63,12 @@ class YouTubeBlockerService : AccessibilityService() {
         return super.onUnbind(intent)
     }
 
-    // Domains to block. Matching is done on the URL host, so "x.com" blocks x.com only and
-    // NOT sites that merely contain that text (e.g. netflix.com).
-    private val blockedDomains = setOf(
-        "youtube.com",
-        "youtu.be",
-        "instagram.com",
-        "instagr.am",
-        "twitter.com",
-        "x.com"
-    )
-
     private fun isBlockedUrl(url: String): Boolean {
         val host = hostOf(url)
-        return blockedDomains.any { host == it || host.endsWith(".$it") }
+        // The blocked-domain list is user-editable in the app, so read it fresh each time.
+        // Matching is host-based, so "x.com" blocks x.com only and NOT sites that merely
+        // contain that text (e.g. netflix.com).
+        return BlockedSiteRepository.load(this).any { host == it || host.endsWith(".$it") }
     }
 
     /**
