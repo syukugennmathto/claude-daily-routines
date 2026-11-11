@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>ログイン - メディア取得</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header><h1>メディア取得</h1></header>
+<main>
+  <form class="card" id="form">
+    <h2>アクセス用トークン</h2>
+    <p class="muted">サーバーの .env に設定した APP_TOKEN を入力してください。</p>
+    <input type="password" id="token" autocomplete="current-password" required aria-label="アクセス用トークン">
+    <div class="actions"><button class="primary" type="submit">ログイン</button></div>
+    <p class="err" id="msg" role="alert"></p>
+  </form>
+</main>
+<script src="/static/login.js"></script>
+</body>
+</html>

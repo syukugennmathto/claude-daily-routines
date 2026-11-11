@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    image: media-fetcher:local
+    container_name: media-fetcher
+    restart: unless-stopped
+    env_file: .env
+    # 自分のマシンの中だけで待ち受ける。スマホからは Tailscale 経由（README 参照）でつなぐ。
+    # インターネットや家庭内LANに直接公開しないこと。
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./data/downloads:/data/downloads   # 完成ファイル
+      - ./data/config:/data/config         # 設定・ジョブのデータベース
+      - ./data/cookies:/data/cookies       # cookies.txt（権限600で保存）
+      - ./data/ytdlp:/data/ytdlp           # yt-dlp の各バージョン（更新・ロールバック用）
+      - ./data/work:/data/work             # 作業用の一時ファイル
+    # ホスト側のフォルダーに書き込めるよう、所有者を合わせる（既定は 1000:1000）
+    user: "${PUID:-1000}:${PGID:-1000}"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    stop_grace_period: 20s
