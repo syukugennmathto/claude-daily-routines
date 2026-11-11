@@ -1,0 +1,7 @@
+.env
+data
+tests
+scripts
+**/__pycache__
+.pytest_cache
+*.md
